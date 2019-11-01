@@ -1,0 +1,58 @@
+.ls-btn-dark {
+    float: right;
+    margin-right: 5px;
+}
+#pesquisar{
+    margin-right: 10px;
+    width: 355px;
+    margin-top: 20px;
+}
+#filtrar{
+    margin-right: 10px;
+    width: 355px;
+    margin-top: 20px;
+}
+#formulario-01{
+    margin-top: 40px;
+}
+
+.ls-btn {
+    border-color: transparent;
+    background-color: transparent;
+}
+
+    
+   .tamanhoLista{
+            width: 300px;
+            overflow:no-content;
+            border: solid 1px;
+            
+    }
+
+@media (min-width: 500px){
+    .tamanhoLista{
+            width: 1000px;
+    }
+    
+    #listaCursos{
+            width: 1000px;
+    }
+   }
+   
+   @media (max-width: 300px){
+    .tamanhoLista{
+            width: 300px;
+                    overflow:auto;
+    }
+    
+    #listaCursos{
+            width: 300px;
+    }
+   }
+   
+
+   .ls-table{
+       
+       
+       margin: 0px;
+   }
