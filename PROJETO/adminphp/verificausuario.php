@@ -80,6 +80,8 @@ function logaUsuario($email){
  
  //Destroi a sessão ou sejá logout.
  function logout(){
+     $_SESSION['PERFIL']=0;
+     $_SESSION['LOGIN'] = FALSE;
      session_start();
      session_destroy();
      header('Location: ../index.php');

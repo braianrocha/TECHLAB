@@ -3,7 +3,7 @@
 require_once('./adminphp/conecta.php');
 // require_once('./controller/parametrosgerais.php');
 //QUERY que será executada no bando de dados 
-$query = "select * from PARAM_GERAIS";
+$query = "SELECT * FROM PARAM_GERAIS";
 
 // Envia a conexão e a query para execução
 $resultado = mysqli_query($conexao, $query);
@@ -53,6 +53,7 @@ $resultado = mysqli_fetch_assoc($resultado);
             // verifica se existe alguma mensagem pra ser enviada para o usuário
             if ((isset($_SESSION['msg']))) {
                 require_once('./mensagem.php');
+                $_SESSION['msg']="0";
             }
             ?>
             <div class="container-fluid"> 

@@ -1,12 +1,10 @@
 <?php
 // Adiciona o arquivo de conexão
-require_once ('./adminphp/conecta.php');
-
 // Adiciona o arquivo de controle que ajudará a listar os dados
 require_once ('./controller/controllerlaboratorio.php');
 require_once ('./adminphp/verificausuario.php');
 verificaLogin();
-verificaNivel();
+require_once ('./adminphp/conecta.php');
 ?>
 
 <!DOCTYPE html>
@@ -30,6 +28,8 @@ verificaNivel();
         <script src="locaweb/html5shiv.js" type="text/javascript"></script>
         <link href="http://assets.locaweb.com.br/locastyle/3.10.1/stylesheets/locastyle.css" rel="stylesheet" type="text/css">
 
+        <link href="css/multi-select.css" media="screen" rel="stylesheet" type="text/css">
+
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <link rel="stylesheet" type="text/css" href="css/laboratorio.css">
     </head>
@@ -44,10 +44,16 @@ verificaNivel();
             <span class="ls-show-sidebar ls-ico-menu"></span>
         </div>
         <!--Barra Vertical de Menu (Contém a logo de usuário,logo do pitagoras e os menus para acessar)-->
-        <?php require_once('./model/menu.php'); ?>
+<?php require_once('./model/menu.php'); ?>
 
         <!-- Aqui inicia o conteúdo da pagina -->
         <main class="ls-main ">
+                        <?php
+            // verifica se existe alguma mensagem pra ser enviada para o usuário
+            if ((isset($_SESSION['msg']))) {
+                require_once('./mensagem.php');
+            }
+            ?>
             <div class="container-fluid"> 
                 <!--Feito por Tainá :D-->
                 <h2 class="sub-titulo">Laboratório</h2> 
@@ -55,8 +61,53 @@ verificaNivel();
                 <!-- MODAL DE CADASTRAR LABORATÓRIO-->
                 <button data-ls-module="modal" data-target="#modalLarge"
                         class="ls-btn-dark ls-ico-plus" id="botao-modal botoes" data-append-to="body" >Novo</button>
-            
 
+             <form action="laboratorio.php" method="GET" class="ls-form ls-form-horizontal row" id="formulario-01">
+                    <fieldset> <button type="submit" class="ls-btn-dark ls-ico-search" id="botoes">Buscar</button>
+                        <label class="ls-label col-md-5 col-xs-12" id="pesquisar">
+                            <b class="ls-label-text">Pesquisar:</b>
+                            <input type="text" placeholder="Informe o que deseja pesquisar" class="ls-field" >
+                        </label>
+
+                        <label class="ls-label col-md-4 col-xs-12" id="filtrar">
+                            <b class="ls-label-text">Filtrar por:</b>
+                            <div class="ls-custom-select">
+                                <select name="insumo" class="ls-select">
+                                    <?php listaInsumo() ?>
+                                </select>
+                            </div>
+                        </label>
+
+                    </fieldset>
+                </form>
+                <div class="tamanhoLista">
+                    <table id="listaLaboratorio" class="ls-table ls-table-striped">
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Laboratório</th>
+                                <th>Sala</th>
+                                <th>Andar</th>
+                                <?php
+                                if ($_SESSION['PERFIL'] == 1) {
+                                    echo "<th>Editar</th>";
+                                } else {
+                                    echo "<th>Visualizar</th>";
+                                }
+                                ?>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody">
+                                                    <?php /*/* if(isset($_GET['insumo'])){
+                            listaLaboratorioGET($_GET['insumo']);
+                        }else{*/
+                            listaLaboratorio();
+                        //} ?>
+                                               
+                        </tbody>
+                    </table>
+                </div>
+                
                 <div class="ls-modal"  id="modalLarge">
                     <div class="ls-modal-large">
                         <div class="ls-modal-header">
@@ -64,7 +115,7 @@ verificaNivel();
                             <h4 class="ls-modal-title">Cadastrar Laboratório</h4>
                         </div>
                         <div class="ls-modal-body" id="myModalBody">
-                            <form action="controller/adicionaLaboratorio.php" method="post"class="ls-form ls-form-horizontal row" id="formulario-02">
+                            <form action="controller/adicionaLab.php" method="post"class="ls-form ls-form-horizontal row" id="formulario-02">
                                 <fieldset>
                                     <label class="ls-label col-md-5 col-xs-12" id="nome-laboratorio">
                                         <b class="ls-label-text">Laboratório</b>
@@ -81,172 +132,87 @@ verificaNivel();
                                     </label>
 
                                 </fieldset>
-                            <fieldset>
-                           
-                                <label class="ls-label col-md-5 col-xs-12" id="ANDAR">
-                                    <b class="ls-label-text">Andar</b>
-                                    <input name="ANDAR" type="text" placeholder="Informe o andar do Laboratório" class="ls-field" required>
-                                </label>
-                                <label class="ls-label col-md-5 col-xs-12" id="SALA">
-                                    <b class="ls-label-text">Sala</b>
-                                    <input name="SALA" type="text" placeholder="Informe o andar do Laboratório" class="ls-field" required>
-                                </label>
-                            </fieldset>
-                               <fieldset> 
+                                <fieldset>
+
+                                    <label class="ls-label col-md-5 col-xs-12" id="ANDAR">
+                                        <b class="ls-label-text">Andar</b>
+                                        <input name="ANDAR" type="text" placeholder="Informe o andar do Laboratório" class="ls-field" required>
+                                    </label>
+                                    <label class="ls-label col-md-5 col-xs-12" id="SALA">
+                                        <b class="ls-label-text">Sala</b>
+                                        <input name="SALA" type="text" placeholder="Informe o andar do Laboratório" class="ls-field" required>
+                                    </label>
+                                </fieldset>
+                                <fieldset> 
                                     <label class="ls-label col-md-5 col-xs-12" id="tipo-insumo">
                                         <b class="ls-label-text">Tipo de Insumo</b>
                                         <div class="ls-custom-select">
                                             <select name="addTipoInsumo" class="ls-select">
-                                                <?php listaTipoInsumo() ?>
+<?php listaTipoInsumo() ?>
                                             </select>
                                         </div>
                                     </label>
-                               
-                               
-                                <label class="ls-label col-md-5 col-xs-12" id="insumo">
-                                    <b class="ls-label-text">Insumo:</b>
-                                    <div class="ls-custom-select">
-                                        <select name="addListaInsumo" class="ls-select">
-                                            <?php listaInsumo() ?>
+
+
+                                    <label class="ls-label col-md-5 col-xs-12" id="insumo">
+                                        <b class="ls-label-text">Insumo:</b>
+
+
+
+                                        <select name="addListaInsumo[]" multiple="multiple" id="my-select" >                                               
+<?php listaInsumo() ?>
                                         </select>
-                                    </div>
-                                </label>
-                               </fieldset>
-                                <!--
-                                <label class="ls-label col-md-5 col-xs-12" id="QUANTIDADE">
-                                        <b class="ls-label-text">Quantidade</b>
-                                        <input name="QUANTIDADE" type="text" placeholder="Informe o andar do Laboratório" class="ls-field" required>
-                                </label>
+                                    </label>
+                                </fieldset>
 
-                            <div class="ls-label col-md-4 col-xs-12">
-                                <p class="ls-label-text" style="padding-top: 25px;">Possui restrição?</p>
-                                <label class="ls-label-text">
-                                    <input type="radio" name="plataforms" class="ls-field-radio">
-                                    Sim
-                                </label>
-                                <label class="ls-label-text">
-                                    <input type="radio" name="plataforms" class="ls-field-radio">
-                                    Não
-                                </label>
-                            </div> 
-                            !-->
-                            <!--
 
-                            <table class="ls-table .ls-table-striped.">
-                                <thead>
-                                    <tr>
-                                        <th>Tipo de Insumo</th>
-                                        <th>Insumo</th>
-                                        <th>Quantidade</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><a href="" title="" class="ls-ico-screen">Computador</a></td>
-                                        <td>Acer i7, 16GB de Ram, 2TB</td>
-                                        <td>35</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                        </div>
-                        !-->
-                        
-                        
-                            <button class="ls-btn ls-float-right" data-dismiss="modal">Fechar</button>
-                            <button type="submit" class="ls-btn-danger" data-save="Salvar">Salvar</button>
+                                <button class="ls-btn ls-float-right" data-dismiss="modal">Fechar</button>
+                                <button type="submit" class="ls-btn-danger" data-save="Salvar">Salvar</button>
                         </div>
                     </div>
                 </div><!-- /.modal -->
-                <button type="button" class="ls-btn-dark ls-ico-search" id="botoes">Buscar</button>
-            </form>
-          
 
-
-
-
-                <form action="" class="ls-form ls-form-horizontal row" id="formulario-01">
-                    <fieldset>
-                        <label class="ls-label col-md-5 col-xs-12" id="pesquisar">
-                            <b class="ls-label-text">Pesquisar:</b>
-                            <input type="text" placeholder="Informe o que deseja pesquisar" class="ls-field" required>
-                        </label>
-
-                        <label class="ls-label col-md-4 col-xs-12" id="filtrar">
-                            <b class="ls-label-text">Filtrar por:</b>
-                            <div class="ls-custom-select">
-                                <select name="" class="ls-select">
-                                    <option>Selecione o filtro</option>
-                                    <option>Tipo 01</option>
-                                    <option>Tipo 02</option>
-                                    <option>Tipo 03</option>
-                                    <option>Tipo 04</option>
-                                    <option>Tipo 05</option>
-                                </select>
-                            </div>
-                        </label>
-
-                    </fieldset>
                 </form>
-                <div class="tamanhoLista">
-                    <table id="listaLaboratorio" class="ls-table ls-table-striped">
-                        <thead>
-                            <tr>
-                            <th>Tipo</th>
-                            <th>Laboratório</th>
-                            <th>Sala</th>
-                            <th>Andar</th>
-                            <th>Editar</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbody">
-                            <?php listaLaboratorio(); ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <!--
 
-                <table class="ls-table ls-table-striped">
-                    <thead>
-                        <tr>
-                            <th>Tipo</th>
-                            <th>Laboratório</th>
-                            <th>Sala</th>
-                            <th>Andar</th>
-                            <th>Editar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                   
-                        
-                       
-                    </tbody>
-                </table>
-                !-->
 
+
+
+
+   
             </div>
 
-            <!--Essa parte é do footer, onde contém por quem é desenvolvido, a logo e o email-->
-            <?php require_once ('model/footer.php'); ?>
-        </main>
 
-        <!--Esses scripts são do locaweb NAO APAGUE-->
-        <script defer>
-            $("#listaLaboratorio").fixedHeader(300);
-        </script>
-        <script src="locaweb/jquery.js" type="text/javascript"></script>
-        <script src="locaweb/example.js" type="text/javascript"></script>
-        <script src="locaweb/localstyle.js" type="text/javascript"></script>
-        <script src="locaweb/highcharts.js" type="text/javascript"></script>
-        <script src="locaweb/panel-charts.js" type="text/javascript"></script>
+        </div>
 
-        <script type="text/javascript">
-            $(window).on('load', function () {
-                locastyle.browserUnsupportedBar.init();
-            });
-        </script>
+        <!--Essa parte é do footer, onde contém por quem é desenvolvido, a logo e o email-->
+<?php require_once ('model/footer.php'); ?>
+    </main>
 
-    </body>
+    <!--Esses scripts são do locaweb NAO APAGUE-->
+    <script defer>
+        $("#listaLaboratorio").fixedHeader(300);
+    </script>
+    <script src="locaweb/jquery.js" type="text/javascript"></script>
+    <script src="locaweb/example.js" type="text/javascript"></script>
+    <script src="locaweb/localstyle.js" type="text/javascript"></script>
+    <script src="locaweb/highcharts.js" type="text/javascript"></script>
+    <script src="locaweb/panel-charts.js" type="text/javascript"></script>
+
+    <script src="js/jquery.multi-select.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $(window).on('load', function () {
+            locastyle.browserUnsupportedBar.init();
+        });
+        $('#my-select').multiSelect({
+
+            selectableFooter: "<div class='custom-header'><span class='ls-ico-checkbox-unchecked' > Opções   </div>",
+            selectionFooter: "<div class='custom-header'><span class='ls-ico-checkbox-checked' > Selecionados</div>"
+        });
+
+
+    </script>
+
+</body>
 </html>
 

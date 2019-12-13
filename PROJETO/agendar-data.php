@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html class="ls-pre-panel">
 <head>
   <title>Agendamento de Laboratórios</title>
@@ -42,18 +41,21 @@
     <span class="ls-show-sidebar ls-ico-menu"></span>
   </div>
   <!--Barra Vertical de Menu (Contém a logo de usuário,logo do pitagoras e os menus para acessar)-->
-<?php require_once('./model/menu.php'); ?>
+<?php require_once('model\menu.php'); ?>
+  
+  
     <!--Aquele é carregado o calendário-->
   <script src="javascript/carrega-calendario.js"></script>
   <!-- Aqui inicia o conteúdo da pagina -->
 <main class="ls-main ">
-  <div class="container-fluid" id="calendar"> 
+  <div class="container-fluid" > 
+      <div id='calendar'></div>
   	<!--Feito por Sander :D-->
 
   </div>
 
 <!--Essa parte é do footer, onde contém por quem é desenvolvido, a logo e o email-->
-                <?php    require_once ('model/footer.php'); ?>
+<?php require_once('model\footer.php'); ?>
 </main>
 
 <!--Esses scripts são do locaweb NAO APAGUE-->

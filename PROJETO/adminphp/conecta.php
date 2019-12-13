@@ -1,5 +1,5 @@
 <?php 
-define('HOST','basemapeamento.mysql.dbaas.com.br');
+define('HOST','186.202.152.175');
 define('USUARIO','basemapeamento');
 define('SENHA','A2000pwd');
 define('DB','basemapeamento');
@@ -18,3 +18,7 @@ $conexao = mysqli_connect(HOST, USUARIO ,SENHA , DB) or die ('Sem conexão');
 
 return $conexao;
 }
+
+$conn = new PDO('mysql:host=' . HOST . ';dbname=' . DB . ';', USUARIO, SENHA);
+
+//basemapeamento.mysql.dbaas.com.br

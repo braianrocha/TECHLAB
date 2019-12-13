@@ -4,11 +4,14 @@ if (empty($_SESSION['msg'])) {
 //require_once('./adminphp/sessao.php');     
 } else {
 
-
     $msg = $_SESSION['msg'];
 
     switch ($msg) {
-
+            
+        default :
+            
+            break;
+            
         case "0":
 
             break;
@@ -118,7 +121,7 @@ if (empty($_SESSION['msg'])) {
 
 
     $_SESSION['msg'] = "0";
-
+    $msg = "0";
 
     unset($_SESSION['msg']);
 }

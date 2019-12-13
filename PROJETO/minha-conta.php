@@ -1,6 +1,14 @@
 <?php require_once('./adminphp/verificausuario.php'); 
  verificaLogin();
+require_once ('./adminphp/conecta.php');
+
+$query = "SELECT U.ID, U.NOME, U.CPF, U.EMAIL, P.DESCRICAO FROM USUARIO U  LEFT JOIN PERIODO P ON U.PERIODO_ID = P.ID WHERE U.ID =".$_SESSION['ID'];
+$resultado = mysqli_query(buscaconexao(),$query);
+$resultado = mysqli_fetch_assoc($resultado);
+
+$_SESSION['NOME'] = $resultado['NOME'];
 ?>
+
 <!DOCTYPE html>
 <html class="ls-pre-panel">
   <head>
@@ -32,7 +40,7 @@
   
     <!-- Barra inicial (Onde contém o titulo) -->
       <div class="ls-notification-topbar">
-        <h1 class="titulo-principal">Agendamento de Laboratórios</h1>
+        <h1 class="titulo-principal">Agendamento de Laboratórios </h1>
       </div>
       <span class="ls-show-sidebar ls-ico-menu"></span>
     </div>
@@ -40,6 +48,11 @@
     <?php require_once('./model/menu.php'); ?>
  
 <main class="ls-main ">
+     <?php
+            if ((isset($_SESSION['msg']))) {
+                require_once('./mensagem.php');
+            }
+            ?>
   <div class="container-fluid">
                         <!--Feito Pelo Sander-->
       <!--Contém o sub-titulo e os botoes-->
@@ -53,30 +66,34 @@
                 <button data-dismiss="modal">&times;</button>
                 <h4 class="ls-modal-title">Editar meus dados</h4>
     </div>
-    <form action="" class="ls-form ls-form-horizontal row" id="formulario-01">
+    <form action="controller/editar_minhaconta.php" method="post" class="ls-form ls-form-horizontal row" id="formulario-01">
   <fieldset>
     <label class="ls-label col-md-5 col-xs-12" >
       <b class="ls-label-text">Nome:</b>
-      <input type="text" placeholder="Informe o seu nome" class="ls-field" required>
+      <input type="text" name="nome" value="<?php echo $resultado["NOME"]?>" class="ls-field" required> 
+      <input type="hidden" name="id" value="<?php echo $resultado["ID"]?>" class="ls-field" required>
     </label>
       <label class="ls-label col-md-5 col-xs-12">
       <b class="ls-label-text">CPF:</b>
-      <input type="text" placeholder="Informe o seu CPF" class="ls-field" required>
+      <input type="text" name="cpf"  placeholder="" class="ls-field" required value="<?php echo $resultado["CPF"]?>" >
     </label>
       <label class="ls-label col-md-5 col-xs-12">
       <b class="ls-label-text">E-mail:</b>
-      <input type="text" placeholder="Informe o seu E-mail" class="ls-field" required>
+      <input type="text" name="email" value="<?php echo $resultado["EMAIL"]?>" class="ls-field" required>
     </label>
       <label class="ls-label col-md-5 col-xs-12" >
       <b class="ls-label-text">Período de Aula:</b>
-      <input type="text" placeholder="Informe o seu Período de Aula" class="ls-field" required>
+      <input type="text" name="descricao" value="<?php echo $resultado["DESCRICAO"]?>" class="ls-field" required>
     </label>
-        </fieldset></form>
       
-    <div class="ls-modal-footer">
+        </fieldset>
+        <div class="ls-modal-footer">
       <button class="ls-btn-dark ls-ico-close" style="margin: 3px" data-dismiss="modal">Cancelar</button>
       <button type="submit" class="ls-btn-dark ls-ico-checkmark" style="margin: 3px;">Salvar</button>
     </div>
+    </form>
+      
+    
   </div>
 </div>
             
@@ -85,29 +102,29 @@
         <!--Aqui aparece a imagem de perfil (icone) e o nome do usuario-->
         <div class="cabecalho-perfil">
                 <img class="img-responsive" src="img/logo-usuario.png" alt="logo-usuario" id="foto-usuario">
-                <h2 class="nome-usuario"><?php echo $_SESSION['NOME']?></h2>
+                <h2 class="nome-usuario"><?php echo $resultado['NOME']?></h2>
         </div>
         <!--Aqui está o formulario desabilitado, onde contém as informações da conta do usuario-->
-        <form action="" id="campos" class="ls-form ls-form-inline row">
+        <form action="" method="post" id="campos" class="ls-form ls-form-inline row">
                 <fieldset>
                     <label class="ls-label col-md-12 col-xs-12">
                         <b class="ls-label-text">Nome:</b>
-                        <input type="text" name="nome" placeholder="Nome Completo" class="ls-field ls-no-style-input" required disabled readonly="true">
+                        <input type="text" name="nome" placeholder="<?php echo $resultado["NOME"]?>" class="ls-field ls-no-style-input" required disabled readonly="true" >
                     </label>
                     
                     <label class="ls-label col-md-12 col-xs-12">
                         <b class="ls-label-text">Email:</b>
-                        <input type="email" name="nome" placeholder="Email" class="ls-field ls-no-style-input" required disabled readonly="true">
+                        <input type="email" name="email" placeholder="<?php echo $resultado["EMAIL"]?>" class="ls-field ls-no-style-input" required disabled readonly="true">
                     </label>  
                     
                     <label class="ls-label col-md-12 col-xs-12">
                         <b class="ls-label-text">CPF:</b>
-                        <input type="number" name="nome" placeholder="CPF" class="ls-field ls-no-style-input" required disabled readonly="true"> 
+                        <input type="number" name="cpf" placeholder="<?php echo $resultado["CPF"]?>" class="ls-field ls-no-style-input" required disabled readonly="true"> 
                     </label>
                     
                     <label class="ls-label col-md-12 col-xs-12">
                         <b class="ls-label-text">Período de Aula:</b>
-                        <input type="text" name="periodo" placeholder="Período de Aula" class="ls-field ls-no-style-input" required disabled readonly="true">
+                        <input type="text" name="periodo" placeholder="<?php echo $resultado["DESCRICAO"]?>" class="ls-field ls-no-style-input" required disabled readonly="true">
                     </label>
                 </fieldset>        
             </form>

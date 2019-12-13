@@ -12,7 +12,7 @@ $nome = mysqli_real_escape_string($conexao, $_POST['DESC']);
 $listaCurso = mysqli_real_escape_string($conexao, $_POST['listaCursoModal']);
 
 //QUERY que será executada no bando de dados 
-$query = "UPDATE CURSO SET CURSO.DESCRICAO = '".$nome."', TIPO_CURSO_ID  = '".$listaCurso."' where ID = '$id'";
+$query = "UPDATE CURSO SET CURSO.DESCRICAO = '".$nome."', TIPO_CURSO_ID  = '".$listaCurso."' where ID = '$id' COLLATE latin1_bin";
 
 //mysqli_query -> Envia a conexão e a query para execução
 // $select -> variavel com resultado da query 

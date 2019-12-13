@@ -32,16 +32,6 @@ verificaNivel();
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <link rel="stylesheet" href="css/cursos.css">
 
-    <script>
-        $(document).ready(function(){
-          $("#busca").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $("#tabela_curso tr").filter(function() {
-              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-          });
-        });
-</script>
     </head>
     <body class="documentacao documentacao_exemplos documentacao_exemplos_painel1 documentacao_exemplos_painel1_pre-painel documentacao_exemplos_painel1_pre-painel_index">
 
@@ -71,7 +61,7 @@ verificaNivel();
                 <h2 class="sub-titulo">Cursos</h2>
 
                 <!-- Botões de Buscar \ Cancelar \ Salvar -->
-
+                <!--A GO RA  -->
                 <button type="button" class="ls-btn-dark ls-ico-close" style="margin: 3px;">Cancelar</button>
                 <button data-ls-module="modal" data-target="#modalsmall" style="margin: 3px" class="ls-btn-dark ls-ico-plus" data-append-to="body">Novo</button>
 
@@ -117,7 +107,7 @@ verificaNivel();
                     <fieldset>
                         <label class="ls-label col-md-5 col-xs-12" id="pesquisar">
                             <b class="ls-label-text">Pesquisar:</b>
-                            <input type="text" id="txtBusca" name="txtBusca" placeholder="Informe o que deseja pesquisar" class="ls-field" required>
+                            <input type="text" name="search" id="search" class="form-control" />  
                         </label>
 
                         <label class="ls-label col-md-4 col-xs-12" id="filtrar">
@@ -134,20 +124,23 @@ verificaNivel();
                     </fieldset>
                 </form>        
                 <! -- Configuração da TABELA -- >
-                <div class="tamanhoLista">
-                    <table id="listaCursos" class="ls-table ls-table-striped">
-                        <thead>
-                            <tr>
-                                <th>Tipo</th>
-                                <th>Curso</th>
-                                <th>Editar</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbody">
-                            <?php listaCurso(); ?>
-                        </tbody>
-                    </table>
+                <div class="table-responsive" >  
+                    <div style="overflow: auto;height: 400px; border:dotted 1px"> 
+                        <table id="listaCursos" class="ls-table ls-table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Tipo</th>
+                                    <th>Curso</th>
+                                    <th>Editar</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabela_curso">
+                                <?php listaCurso(); ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+
             </div>
 
             <!--Essa parte é do footer, onde contém por quem é desenvolvido, a logo e o email-->
@@ -163,9 +156,11 @@ verificaNivel();
         <script src="locaweb/panel-charts.js" type="text/javascript"></script>
         <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
         <script src="javascript/fixedHeader.js"></script>
-        
+
         <script defer>
-            $("#listaCursos").fixedHeader(300);
+           //   $("#listaCursos").fixedHeader();
+              
+              
         </script>
         <script type="text/javascript">
             $(window).on('load', function () {
@@ -174,37 +169,15 @@ verificaNivel();
 
 
         </script>
-
-        
-        
-                <script type="text/javascript">
-    
-                document.getElementById("txtBusca").addEventListener("keyup",function(){
-                    var busca = document.getElementById("txtBusca").value.toLowerCase();
-                    
-                    for(var i = 0; i < tbody.childNodes.length;i++){
-                        var achou = false;
-                        var tr = tbody.childNodes[i];
-                        var td = tr.childNodes;
-                        
-                        for(var j = 0; j <td.length;j++){
-                            var value = td[j].childNodes[0].nodeValue.toLowerCase();
-                            if(value.indexOf(busca)>=0){
-                                achou = true;
-                            }
-                        }
-                        if(achou){
-                                tr.style.display = "table-row";
-                        }else{
-                            tr.style.display = "none";
-                        }
-                }
-                    
+        <script>
+            $(document).ready(function () {
+                $("#search").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#tabela_curso tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
                 });
-
-
+            });
         </script>
-        
-        
     </body>
 </html>

@@ -30,7 +30,7 @@ function listaCurso(){
                                     <form action='controller/editarCurso.php'  method='post' class='ls-form-inline row' >
                                         <label class='ls-label col-md-11'>
                                                 <b class='ls-label-text'>Curso: </b>
-                                                <input type='text'  name='DESC' placeholder='' required  value='".utf8_encode($curso['DESC'])."'>
+                                                <input type='text'  name='DESC' placeholder='' required  value='".$curso['DESC']."'>
                                                 <input type='hidden' name='ID' placeholder='' required  value='".$curso['ID']."'>
                                         </label>
                                         <label class='ls-label col-md-4  col-md-11' id='filtrar'>
@@ -58,7 +58,6 @@ function listaCurso(){
                                  <form action='controller/excluirCurso.php'  method='post' class='ls-form-inline row' >
                                   <input type='hidden' name='ID' placeholder='' required  value='".$curso['ID']."'>
                                 <p><h3>Confirma exclusão do registro? 
-                                <br><br><center><p style='color: red; font-size:20px'>".utf8_encode($curso["DESC"])."</p></h3></center>
                                   <br><p> Essa operação não pode ser desfeita.</p>
                               </div>
                               <div class='ls-modal-footer'>
@@ -99,8 +98,7 @@ function listaTipoCurso2($idSelecionado){
             $op .= "<option selected value='".$tipoCurso2["TIPO"]."'>".$tipoCurso2["DESCRICAO"]."</option>";
         }else{
             $op .= "<option value='".$tipoCurso2["TIPO"]."'>".$tipoCurso2["DESCRICAO"]."</option>";
-        }
-        
+        } 
     }
     return $op;
     

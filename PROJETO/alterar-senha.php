@@ -1,4 +1,8 @@
-<?php ?>    
+<?php
+require_once ('./adminphp/verificausuario.php');
+verificaLogin();
+require_once ('./adminphp/conecta.php');
+?>    
 <!DOCTYPE html>
 <html class="ls-pre-panel">
     <head>

@@ -34,7 +34,7 @@ if($retorno == 1){
   if($nome["PERFIL_ID"] == 1){
   header('Location: ../inicial-adm.php');
   }else{
-  header('Location: ../agendamentos.php');
+  header('Location: ../inicial.php');
 
   }
   exit();
