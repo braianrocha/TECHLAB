@@ -81,6 +81,8 @@ require_once ('./adminphp/conecta.php');
                     </fieldset>
                 </form>
                 <div class="tamanhoLista">
+                <div class="table-responsive" >  
+                    <div style="overflow: auto;height: 400px;"> 
                     <table id="listaLaboratorio" class="ls-table ls-table-striped">
                         <thead>
                             <tr>
@@ -106,6 +108,8 @@ require_once ('./adminphp/conecta.php');
                                                
                         </tbody>
                     </table>
+                        </div>
+                        </div>
                 </div>
                 
                 <div class="ls-modal"  id="modalLarge">

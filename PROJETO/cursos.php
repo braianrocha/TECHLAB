@@ -66,17 +66,17 @@ verificaNivel();
                 <button data-ls-module="modal" data-target="#modalsmall" style="margin: 3px" class="ls-btn-dark ls-ico-plus" data-append-to="body">Novo</button>
 
                 <div class="ls-modal" id="modalsmall">
-                    <div class="ls-modal-large">
+                    <div class="ls-modal-small">
                         <div class="ls-modal-header">
                             <button data-dismiss="modal">&times;</button>
                             <h4 class="ls-modal-title">Novo Curso</h4>
                         </div>
                         <!--MODAL QUE ADICONA UM NOVO CURSO -->
                         <div class="ls-modal-body">
-                            <form action='controller/adicionaCurso.php'  method='post' class='ls-form-inline row' >
-                                <label class="ls-label col-md-10 ls-form-inline row" >
+                            <form action='controller/adicionaCurso.php'  method='post' class='ls-form row' >
+                                <label class="ls-label col-md-4 col-xs-12 ls-form row" style="margin-left: 0px;  width: 355px;">
                                     <b class="ls-label-text">Curso: </b>
-                                    <input type="text"  name="DESC" placeholder="" required >
+                                    <input type="text"  name="DESC" placeholder="" required  >
                                 </label>
                                 <label class="ls-label col-md-4 col-xs-12" id="filtrar">
                                     <b class="ls-label-text">Tipo de curso:</b>
@@ -92,7 +92,7 @@ verificaNivel();
                                 </label>  
                                 <div class="ls-modal-footer">
                                     <button class="ls-btn-dark ls-ico-close" style="margin: 3px" data-dismiss="modal">Cancelar</button>
-                                    <button type="submit ls-ico-checkmark" class="ls-btn-dark" style="margin: 3px;">Salvar</button>
+                                    <button type="submit" class="ls-btn-dark ls-ico-checkmark" style="margin: 3px; float:left;">Salvar</button>
                                 </div>
                             </form>
                         </div>
@@ -125,7 +125,7 @@ verificaNivel();
                 </form>        
                 <! -- Configuração da TABELA -- >
                 <div class="table-responsive" >  
-                    <div style="overflow: auto;height: 400px; border:dotted 1px"> 
+                    <div style="overflow: auto;height: 400px;"> 
                         <table id="listaCursos" class="ls-table ls-table-striped">
                             <thead>
                                 <tr>

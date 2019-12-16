@@ -27,10 +27,10 @@ function listaCurso(){
                                 <h4 class='ls-modal-title'>Editar Curso</h4>
                                 </div>
                                 <div class='ls-modal-body'>
-                                    <form action='controller/editarCurso.php'  method='post' class='ls-form-inline row' >
+                                    <form action='controller/editarCurso.php'  method='post' class='ls-form row' >
                                         <label class='ls-label col-md-11'>
                                                 <b class='ls-label-text'>Curso: </b>
-                                                <input type='text'  name='DESC' placeholder='' required  value='".$curso['DESC']."'>
+                                                <input type='text'  name='DESC' style='width:324px;' placeholder='' required  value='".$curso['DESC']."'>
                                                 <input type='hidden' name='ID' placeholder='' required  value='".$curso['ID']."'>
                                         </label>
                                         <label class='ls-label col-md-4  col-md-11' id='filtrar'>
@@ -41,7 +41,7 @@ function listaCurso(){
                                         </label>
                                         <div class='ls-modal-footer'>
                                               <button class='ls-btn-dark ls-float-right ls-ico-close' data-dismiss='modal' style='margin: 3px;'>Cancelar</button>
-                                              <button type='submit' class='ls-btn-dark ls-ico-checkmark' style='margin: 3px;'>Salvar</button>   
+                                              <button type='submit' class='ls-btn-dark ls-ico-checkmark' style='margin: 3px; float:left;'>Salvar</button>   
                                         </div>
                                     </form>
                               </div>

@@ -88,8 +88,8 @@ $_SESSION['NOME'] = $resultado['NOME'];
       
         </fieldset>
         <div class="ls-modal-footer">
-      <button class="ls-btn-dark ls-ico-close" style="margin: 3px" data-dismiss="modal">Cancelar</button>
-      <button type="submit" class="ls-btn-dark ls-ico-checkmark" style="margin: 3px;">Salvar</button>
+      <button class="ls-btn-dark ls-float-right ls-ico-close" style="margin: 3px;" data-dismiss="modal">Cancelar</button>
+      <button type="submit" class="ls-btn-dark ls-ico-checkmark" style="margin: 3px; float: left;">Salvar</button>
     </div>
     </form>
       

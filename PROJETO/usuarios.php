@@ -74,7 +74,6 @@ $queryPeriodo = mysqli_query(buscaconexao(), $queryBuscaPeriodo);
                     <div id="botaocadastro" class="">
                         <button type="button" class="ls-btn-dark ls-ico-search" style="margin:2px;">Buscar</button>
                         <button data-ls-module="modal" data-target="#modalSmall" data-append-to="body" type="button" class="ls-btn-dark ls-ico-plus" style="margin: 2px;">Novo </button>
-                        <button data-ls-module="modal" data-target="#modalExcluir" data-append-to="body" type="button" class="ls-btn-dark ls-ico-plus" style="margin: 2px;">Excluir </button>
                         <button type="button" class="ls-btn-dark ls-ico-close" style="margin:2px;">Cancelar</button>
                     </div>
 
@@ -205,6 +204,8 @@ $queryPeriodo = mysqli_query(buscaconexao(), $queryBuscaPeriodo);
                         </fieldset>
                         <!--           LISTA               -->
                     </form>
+                    <div class="table-responsive" >  
+                    <div style="overflow: auto;height: 400px;"> 
                     <table class="ls-table ls-table-striped">
                         <thead>
                             <tr>
@@ -338,7 +339,8 @@ $queryPeriodo = mysqli_query(buscaconexao(), $queryBuscaPeriodo);
                         </tbody>
                     </table>
                     </form>
-
+                    </div>
+              </div>
                 </div>
 
             </div>

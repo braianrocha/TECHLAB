@@ -71,6 +71,8 @@ require_once('./controller/controllerinsumo.php');
     </form>
 
     <!--Insumos-->
+    <div class="table-responsive" >  
+      <div style="overflow: auto;height: 400px;"> 
       <table class="ls-table ls-table-striped">
         <thead>
           <tr>
@@ -83,6 +85,8 @@ require_once('./controller/controllerinsumo.php');
           <?php listaInsumo(); ?>
         </tbody>
       </table>
+  </div>
+  </div>
     </div>
     </div>
 

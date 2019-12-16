@@ -93,6 +93,8 @@ $resultado = mysqli_query($conexao, $query);
 
                     </fieldset>
                 </form>
+                <div class="table-responsive" >  
+                    <div style="overflow: auto;height: 400px;"> 
                 <table class="ls-table ls-table-striped">
                     <thead>
                         <tr>
@@ -143,7 +145,8 @@ $resultado = mysqli_query($conexao, $query);
                     </tbody>
                 </table>
             </div>
-
+          </div>
+        </div>
             <!--Essa parte é do footer, onde contém por quem é desenvolvido, a logo e o email-->
 <?php require_once('model\footer.php'); ?>
         </main>
