@@ -2,6 +2,7 @@
  verificaLogin();
 require_once ('./adminphp/conecta.php');
 
+
 $query = "SELECT U.ID, U.NOME, U.CPF, U.EMAIL, P.DESCRICAO FROM USUARIO U  LEFT JOIN PERIODO P ON U.PERIODO_ID = P.ID WHERE U.ID =".$_SESSION['ID'];
 $resultado = mysqli_query(buscaconexao(),$query);
 $resultado = mysqli_fetch_assoc($resultado);

@@ -96,6 +96,7 @@ verificaLogin();
             // verifica se existe alguma mensagem pra ser enviada para o usuário
             if ((isset($_SESSION['msg']))) {
                 require_once('./mensagem.php');
+                unset($_SESSION['msg']);
             }
             ?>
             <div id='calendar'></div>

@@ -4,7 +4,7 @@ require_once('../adminphp/verificausuario.php');
 verificaLogin();
 // Adiciona o arquivo de conexão
 require_once('../adminphp/conecta.php');
-session_start();
+
 //
 //Antecedência mínima para agendamento: 
 //2
@@ -38,6 +38,8 @@ function antecedenciaMAX($data) {
     $timeStampMax = date('d-m-Y', strtotime($dias));
     $timeStampMax = strtotime($timeStampMax);
     if ($timeStamp > $timeStampMax) {
+        $_SESSION['msg'] = "ANTMAX";
+        header('Location: ../agendar-data.php');
         return FALSE;
     } else {
         return TRUE;
@@ -51,8 +53,8 @@ function antecedenciaMIN($data) {
     $timeStampMin = date('d-m-Y', strtotime($dias));
     $timeStampMin = strtotime($timeStampMin);
     if ($timeStamp < $timeStampHoje || $timeStamp < $timeStampMin) {
-       $_SESSION['msg'] = "MSG01";
-          header('Location: ../agendar-data.php');
+        $_SESSION['msg'] = "ANTMIN";
+        header('Location: ../agendar-data.php');
         return FALSE;
     } else {
         return TRUE;
@@ -62,10 +64,12 @@ function antecedenciaMIN($data) {
 function maxAgendamentosDia($data, $id) {
     $Where = date("Y/m/d", strtotime(str_replace("/", '-', $data)));
     $timeStamp = strtotime(str_replace("/", '-', $data));
-    $query = "SELECT COUNT(*) AS QNT FROM AGENDAMENTO WHERE DATA_AG ='" . $Where . "' AND USUARIO_ID =" . $id;
+    $query = "SELECT COUNT(*) AS QNT FROM AGENDAMENTO WHERE DATA_AG ='" . $Where . "' AND SITUACAO_SOLIC_ID != 'C' AND USUARIO_ID =" . $id;
     $resultado = mysqli_query(buscaconexao(), $query);
     $quantidade = mysqli_fetch_assoc($resultado);
     if ($quantidade['QNT'] >= pgMAXAGEDIA()) {
+        $_SESSION['msg'] = "MAXAGDIA";
+        header('Location: ../agendar-data.php');
         return FALSE;
     } else {
         return TRUE;
@@ -73,10 +77,15 @@ function maxAgendamentosDia($data, $id) {
 }
 
 function maxAgendamentosSimultaneo($id) {
-    $query = "SELECT COUNT(*) AS QNT FROM AGENDAMENTO WHERE USUARIO_ID =" . $id . "AND DATA_AG > CURDATE()";
-    $resultado = mysqli_query(buscaconexao(), $query);
-    $quantidade = mysqli_fetch_assoc($resultado);
-    if ($quantidade['QNT'] >= pgMAXAGESIMULTANEO()) {
+    $querySimu = "SELECT COUNT(*) AS QNTS FROM AGENDAMENTO WHERE USUARIO_ID =" . $id . " AND  DATA_AG > CURDATE()";
+    $resultadoSimu = mysqli_query(buscaconexao(), $querySimu);
+    echo $querySimu;
+    var_dump($resultadoSimu);
+    $quantidadeSimu = mysqli_fetch_assoc($resultadoSimu);
+    if ($quantidadeSimu['QNTS'] >= pgMAXAGESIMULTANEO()) {
+
+        $_SESSION['msg'] = "MAXAGSIMU";
+        header('Location: ../agendar-data.php');
         return FALSE;
     } else {
         return TRUE;
@@ -128,9 +137,9 @@ function pgADIANTMIN() {
 
 function verificaAgendamento($dataVerif, $idVerif, $IDLABO) {
     $Where = date("Y-m-d", strtotime(str_replace("/", '-', $dataVerif)));
-    $query = "SELECT AGENDAMENTO.LABORATORIO_ID AS IDAGEN , AGENDAMENTO.DATA_AG , AGENDAMENTO.PERIODO_ID , PERI.FIM , PERI.INICIO FROM AGENDAMENTO 
+    $query = "SELECT AGENDAMENTO.SITUACAO_SOLIC_ID AS IDSIT , AGENDAMENTO.LABORATORIO_ID AS IDAGEN , AGENDAMENTO.DATA_AG , AGENDAMENTO.PERIODO_ID , PERI.FIM , PERI.INICIO FROM AGENDAMENTO 
         INNER JOIN PERIODO PERI ON AGENDAMENTO.PERIODO_ID = PERI.ID
-        WHERE DATA_AG ='" . $Where . "' AND LABORATORIO_ID =" . $IDLABO;
+        WHERE DATA_AG ='" . $Where . "' AND  SITUACAO_SOLIC_ID != 'C'  AND LABORATORIO_ID =" . $IDLABO;
     $resultad0 = mysqli_query(buscaconexao(), $query);
     $queryPeri = "SELECT * FROM PERIODO WHERE ID =" . $idVerif;
     $resultadoPeri = mysqli_query(buscaconexao(), $queryPeri);
@@ -143,9 +152,13 @@ function verificaAgendamento($dataVerif, $idVerif, $IDLABO) {
     while ($AGENDAMENTOS = mysqli_fetch_assoc($resultad0)) {
         if ($AGENDAMENTOS['DATA_AG'] == $Where && $AGENDAMENTOS['IDAGEN'] == $IDLABO) {
             if (($AGENDAMENTOS['PERIODO_ID'] == $idVerif)) {
+                $_SESSION['msg'] = "AGENDUPLO";
+                header('Location: ../agendar-data.php');
                 return FALSE;
             }
             if ($INICIO == $AGENDAMENTOS['INICIO'] || $FIM == $AGENDAMENTOS['FIM']) {
+                $_SESSION['msg'] = "AGENDUPLO";
+                header('Location: ../agendar-data.php');
                 return FALSE;
             }
 
@@ -155,15 +168,13 @@ function verificaAgendamento($dataVerif, $idVerif, $IDLABO) {
     return TRUE;
 }
 
-
-
-function gravaAgendamento($query){
+function gravaAgendamento($query) {
 
     $resultado = mysqli_query(buscaconexao(), $query);
-    If($resultado){
-       $_SESSION['msg'] = "TESTE";
-          header('Location: ../agendar-data.php');
-    }else{
+    If ($resultado) {
+        $_SESSION['msg'] = "MSG21";
+        header('Location: ../agendar-data.php');
+    } else {
         
     }
 }

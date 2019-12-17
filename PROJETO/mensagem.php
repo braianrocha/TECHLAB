@@ -7,10 +7,10 @@ if (empty($_SESSION['msg'])) {
     $msg = $_SESSION['msg'];
 
     switch ($msg) {
-            
+
         default :
             break;
-            
+
         case "0":
             break;
 
@@ -90,9 +90,7 @@ if (empty($_SESSION['msg'])) {
             echo "<div id='alerta-msg' class='ls-alert-warning'><center> Enviamos um link para redefinição de senha no email xyz****@gmail.com. Verifique sua caixa de entrada ou de spam.</div>";
             break;
 
-        case "MSG21" :
-            echo "<div id='alerta-msg' class='ls-alert-success'><center>Agendamento de laboratório realizado com sucesso.</div>";
-            break;
+
 
         case "MSG22" :
             echo "<div id='alerta-msg' class='ls-alert-success'><center>Agendamento de laboratório cancelado com sucesso.</div>";
@@ -113,6 +111,53 @@ if (empty($_SESSION['msg'])) {
 
         case "MSG99" :
             echo "<div id='alerta-msg' class='ls-alert-danger'><center>DESLOGADO COM SUCESSO !!</div>";
+            break;
+
+
+        // ========================================= MENSAGENS DOS PARÂMETROS GERAIS===========================================================
+
+        case "ANTMIN" :
+            $query = "SELECT AG_ADIANT_MIN FROM PARAM_GERAIS";
+            $resultado = mysqli_query(buscaconexao(), $query);
+            $resultado = mysqli_fetch_array($resultado);
+            $resultado['AG_ADIANT_MIN'];
+            echo "<div id='alerta-msg' class='ls-alert-danger'><center><b>Agendamento não efetuado ! </b><br>Tempo de antecedência minima para agendamento é de " . $resultado['AG_ADIANT_MIN'] . " dias.</div>";
+            break;
+    
+    
+            case "ANTMAX" :
+            $query = "SELECT AG_ADIANT_MAX FROM PARAM_GERAIS";
+            $resultado = mysqli_query(buscaconexao(), $query);
+            $resultado = mysqli_fetch_array($resultado);
+            $resultado['AG_ADIANT_MAX'];
+            echo "<div id='alerta-msg' class='ls-alert-danger'><center><b>Agendamento não efetuado ! </b><br>Tempo de antecedência máxima para agendamento é de " . $resultado['AG_ADIANT_MAX'] . " dias.</div>";
+            break;
+        
+        
+        
+            case "MAXAGDIA" :
+            $query = "SELECT AG_MAX_DIA FROM PARAM_GERAIS";
+            $resultado = mysqli_query(buscaconexao(), $query);
+            $resultado = mysqli_fetch_array($resultado);
+            $resultado['AG_MAX_DIA'];
+            echo "<div id='alerta-msg' class='ls-alert-danger'><center><b>Agendamento não efetuado ! </b><br>O maximo de agendamentos por dia é de " . $resultado['AG_MAX_DIA'] . " agendamentos.</div>";
+            break;
+        
+        
+            case "MAXAGSIMU" :
+            $query = "SELECT AG_MAX_SIMULT FROM PARAM_GERAIS";
+            $resultado = mysqli_query(buscaconexao(), $query);
+            $resultado = mysqli_fetch_array($resultado);
+            $resultado['AG_MAX_SIMULT'];
+            echo "<div id='alerta-msg' class='ls-alert-danger'><center><b>Agendamento não efetuado ! </b><br>O maximo de agendamentos simultâneos é de " . $resultado['AG_MAX_SIMULT'] . " agendamentos.</div>";
+            break;
+        
+            case "AGENDUPLO" :
+            echo "<div id='alerta-msg' class='ls-alert-danger'><center><b>Agendamento não efetuado ! </b><br>Já existe um agendamento para esse laboratório nessa  data.</div>";
+            break;
+        
+            case "MSG21" :
+            echo "<div id='alerta-msg' class='ls-alert-success'><center>Agendamento de laboratório realizado com sucesso.</div>";
             break;
     }
 

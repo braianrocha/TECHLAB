@@ -33,19 +33,20 @@ $query = "INSERT INTO AGENDAMENTO (DATA_SOLIC , USUARIO_ID , DATA_AG, PERIODO_ID
     verificaAgendamento($DATA_AG,$periodo,$idLAB) == FALSE
          ){
      
-     echo "antecedenciaMax".antecedenciaMax($DATA_AG);
-     echo "<BR>maxAgendamentosDia".maxAgendamentosDia($DATA_AG,$idUser);
-     echo "<BR>maxAgendamentosSimultaneo".maxAgendamentosSimultaneo($idUser);
-     echo  "<BR>antecedenciaMIN".antecedenciaMIN($DATA_AG);
-     echo  "<BR>verificaAgendamento".verificaAgendamento($DATA_AG,$periodo,$idLAB);
+    // echo "antecedenciaMax".antecedenciaMax($DATA_AG);
+    // echo "<BR>maxAgendamentosDia".maxAgendamentosDia($DATA_AG,$idUser);
+    // echo "<BR>maxAgendamentosSimultaneo".maxAgendamentosSimultaneo($idUser);
+    // echo  "<BR>antecedenciaMIN".antecedenciaMIN($DATA_AG);
+    // echo  "<BR>verificaAgendamento".verificaAgendamento($DATA_AG,$periodo,$idLAB);
+     header('Location: ../agendar-data.php');
+     die();
      
-     echo("deu ruim<br>");
      echo $query;
      
 //     header('Location: ../agendar-laboratorio.php');
 //     exit();
  }else{
-     $_SESSION['msg'] = "MSG02";
+     
     gravaAgendamento($query);
      
  }
