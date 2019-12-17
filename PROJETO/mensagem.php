@@ -9,11 +9,9 @@ if (empty($_SESSION['msg'])) {
     switch ($msg) {
             
         default :
-            
             break;
             
         case "0":
-
             break;
 
         case "MSG01" :

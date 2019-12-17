@@ -61,6 +61,12 @@ $reserva = mysqli_fetch_array($reserva);
         <!-- Aqui inicia o conteúdo da pagina -->
         <main class="ls-main ">
             <div class="container-fluid"> 
+                                                <?php
+            // verifica se existe alguma mensagem pra ser enviada para o usuário
+            if ((isset($_SESSION['msg']))) {
+                require_once('./mensagem.php');
+            }
+            ?>
                 <!--Feito por Tainá :D-->
 
                 <h2 class="sub-titulo">Olá, <?php echo $_SESSION['NOME'] ?></h2> 

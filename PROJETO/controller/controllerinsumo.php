@@ -19,7 +19,9 @@ function listaInsumo(){
                         <button  data-ls-module='modal' data-target='#modalSmall".$insumo['ID']."' class='ls-btn ls-ico-pencil'></button>
                         <button  data-ls-module='modal' data-target='#deletemodalSmall".$insumo['ID']."' class='ls-btn ls-ico-remove'></button>
                             
-                        <!-- MODAL PARA EDITAR -->
+                       
+                    </td>
+                     <!-- MODAL PARA EDITAR -->
                           <div class='ls-modal' id='modalSmall".$insumo['ID']."'>
                             <div class='ls-modal-small'>
                               <div class='ls-modal-header'>
@@ -71,7 +73,6 @@ function listaInsumo(){
                                  </div>
                             </div>
                           </div>
-                    </td>
              </tr>  "; 
         
     }

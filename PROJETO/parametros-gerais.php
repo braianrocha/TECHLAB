@@ -83,8 +83,6 @@ $resultado = mysqli_fetch_assoc($resultado);
                             echo "<input type='checkbox' name='AG_APROVA'>";
                         }
                         ?>
-
-
                         <label class="ls-switch-label"  name="label-teste" ls-switch-off="Desativado" ls-switch-on="Ativado"><span></span></label>
                     </div>
                 </form>

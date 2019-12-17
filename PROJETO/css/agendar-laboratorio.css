@@ -9,3 +9,17 @@
     background-color: transparent;
     border-color: transparent;
 }
+
+
+.modal-backdrop  {
+  z-index: -1;
+}
+
+
+
+
+.ls-sidebar {
+
+    height: calc(100% - 0px);
+}
+

@@ -3,9 +3,6 @@ require_once ('./adminphp/conecta.php');
 
 // Adiciona o arquivo de controle que ajudará a listar os dados
 
-
-
-
 $op = "";
 $query2 = "SELECT * FROM PERIODO ORDER BY ID";
 $resultado2 = mysqli_query(buscaconexao(), $query2);

@@ -1,5 +1,4 @@
 <?php
-
 require_once ('./controller/controllerusuario.php');
 require_once ('./adminphp/verificausuario.php');
 verificaLogin();
@@ -12,9 +11,37 @@ INNER JOIN PERFIL  ON PERFIL.ID = USER.PERFIL_ID ORDER BY USER.ID";
 
 $resultado = mysqli_query(buscaconexao(), $query);
 
+function Periodo($idSelecionado) {
+    $queryBuscaPeriodo = "SELECT * FROM PERIODO";
+    $queryPeriodo = mysqli_query(buscaconexao(), $queryBuscaPeriodo);
+    $op = "";
 
-$queryBuscaPeriodo = "SELECT * FROM PERIODO";
-$queryPeriodo = mysqli_query(buscaconexao(), $queryBuscaPeriodo);
+    while ($PERIODO = mysqli_fetch_array($queryPeriodo)) {
+        if ($idSelecionado == $PERIODO['ID']) {
+            $op .= "<option selected value='" . $PERIODO['ID'] . "'>" . $PERIODO['DESCRICAO'] . "</option>";
+        } else {
+            $op .= "<option value='" . $PERIODO['ID'] . "'>" . $PERIODO['DESCRICAO'] . "</option>";
+        }
+    }
+    return $op;
+}
+
+$queryPeri = "SELECT * FROM PERIODO ORDER BY ID ";
+$resultadoPeri = $conn->prepare($queryPeri);
+$resultadoPeri->execute();
+$optionPeri = "";
+while ($rowPeri = $resultadoPeri->fetch(PDO::FETCH_ASSOC)) {
+    $optionPeri .= "<option  value='" . $rowPeri["ID"] . "'>" . $rowPeri["DESCRICAO"] . "</option>";
+}
+
+
+$queryPerfil = "SELECT * FROM PERFIL ORDER BY ID ";
+$resultadoPerfil = $conn->prepare($queryPerfil);
+$resultadoPerfil->execute();
+$optionPerfil = "";
+while ($rowPerfil = $resultadoPerfil->fetch(PDO::FETCH_ASSOC)) {
+    $optionPerfil .= "<option  value='" . $rowPerfil["ID"] . "'>" . $rowPerfil["DESCRICAO"] . "</option>";
+}
 ?>
 
 
@@ -55,7 +82,7 @@ $queryPeriodo = mysqli_query(buscaconexao(), $queryBuscaPeriodo);
             <span class="ls-show-sidebar ls-ico-menu"></span>
         </div>
         <!--Barra Vertical de Menu (Contém a logo de usuário,logo do pitagoras e os menus para acessar)-->
-        <?php require_once('./model/menu.php'); ?>
+<?php require_once('./model/menu.php'); ?>
 
         <!-- Aqui inicia o conteúdo da pagina -->
         <main class="ls-main ">
@@ -63,19 +90,15 @@ $queryPeriodo = mysqli_query(buscaconexao(), $queryBuscaPeriodo);
                 <div class="container-fluid">
 
                     <!--Feito por Henrique-->
-                    <?php
-                    // verifica se existe alguma mensagem pra ser enviada para o usuário
-                    if ((isset($_SESSION['msg']))) {
-                        require_once('./mensagem.php');
-                    }
-                    ?>
+<?php
+// verifica se existe alguma mensagem pra ser enviada para o usuário
+if ((isset($_SESSION['msg']))) {
+    require_once('./mensagem.php');
+}
+?>
                     <h2 class="sub-titulo">Usuários</h2>
 
-                    <div id="botaocadastro" class="">
-                        <button type="button" class="ls-btn-dark ls-ico-search" style="margin:2px;">Buscar</button>
-                        <button data-ls-module="modal" data-target="#modalSmall" data-append-to="body" type="button" class="ls-btn-dark ls-ico-plus" style="margin: 2px;">Novo </button>
-                        <button type="button" class="ls-btn-dark ls-ico-close" style="margin:2px;">Cancelar</button>
-                    </div>
+
 
                     <br>
                     <br>
@@ -88,7 +111,7 @@ $queryPeriodo = mysqli_query(buscaconexao(), $queryBuscaPeriodo);
                                 <h4 id="titulomodal" class="ls-modal-title">Novo usuário</h4>
                             </div>
                             <div class="ls-modal-body">
-                                <form id="formAddUser" action="/controller/adicionaUsuario.php" class="ls-form row" method="post">
+                                <form id="formAddUser" action="./controller/adicionaUsuario.php" class="ls-form row" method="post">
                                     <fieldset>
                                         <label class="ls-label col-md-12 col-xs-12">
                                             <b class="ls-label-text">Nome*</b>
@@ -109,30 +132,8 @@ $queryPeriodo = mysqli_query(buscaconexao(), $queryBuscaPeriodo);
                                             <b class="ls-label-text">Perfil</b>
                                             <div class="ls-custom-select">
                                                 <select name="perfil" id="inputAddPerfil" class="ls-select">
-                                                    <option>Selecione</option>
-                                                    <option>Ativos</option>
-                                                    <option>Desativados</option>
+<?php echo $optionPerfil ?>
                                                 </select>
-                                            </div>
-                                        </label>
-                                    </fieldset>
-
-                                    <fieldset>
-                                        <label class="ls-label col-md-12">
-                                            <b class="ls-label-text">Senha</b>
-                                            <div class="ls-prefix-group">
-                                                <input type="password" id="inputAddPassword_1" name="password" value="" >
-                                                <a class="ls-label-text-prefix ls-toggle-pass ls-ico-eye" data-toggle-class="ls-ico-eye, ls-ico-eye-blocked" data-target="#password_field" href="#">
-                                                </a>
-                                            </div>
-                                        </label>
-
-                                        <label class="ls-label col-md-12">
-                                            <b class="ls-label-text">Confirme sua senha</b>
-                                            <div class="ls-prefix-group">
-                                                <input type="password"  id="inputAddPassword_2" name="con_password" value="" >
-                                                <a class="ls-label-text-prefix ls-toggle-pass ls-ico-eye" data-toggle-class="ls-ico-eye, ls-ico-eye-blocked" data-target="#password_field2" href="#">
-                                                </a>
                                             </div>
                                         </label>
                                     </fieldset>
@@ -142,34 +143,25 @@ $queryPeriodo = mysqli_query(buscaconexao(), $queryBuscaPeriodo);
                                             <b class="ls-label-text">Período de aula</b>
                                             <div class="ls-custom-select">
                                                 <select name="turno" id="inputAddTurno" class="ls-select">
-                                                    <option>Selecione</option>
-                                                    <option>Manhã</option>
-                                                    <option>Noite</option>
+<?php echo $optionPeri ?>
                                                 </select>
                                             </div>
                                         </label>
 
                                         <div class="ls-label col-md-12 col-xs-12">
                                             <p class="ls-label-text">Pode reservar?</p>
-                                            <div class="form-check-inline">
-                                                <input class="form-check-input-inline" id="inputAddReservaTrue" type="radio" name="reservar" id="gridRadios1" value="true" checked>
-                                                Sim
-                                                <label class="form-check-label-inline" for="gridRadios1">
-                                                </label>
-                                            </div>
-                                            <div class="form-check-inline">
-                                                <input class="form-check-input-inline" id="inputAddReservaFalse" type="radio" name="reservar" id="gridRadios2" value="false">
-                                                Não
-                                                <label class="form-check-label-inline" for="gridRadios2">
-                                                </label>
+                                            <div data-ls-module="switchButton" class="ls-switch-btn ls-float-center">                      
+                                                <input type='checkbox'  name='agendamento'>
+                                                <input type='checkbox' checked name='agendamento'>
+                                                <label class="ls-switch-label"  name="label-teste" ls-switch-off="NÃO" ls-switch-on="SIM"><span></span></label>
                                             </div>
                                         </div>     </fieldset>
-
+                                    <button class="ls-btn ls-float-right" data-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="ls-btn-primary" onclick="preSubmit()">Salvar</button>
                                 </form>
                             </div>
                             <div class="ls-modal-footer">
-                                <button class="ls-btn ls-float-right" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="ls-btn-primary" onclick="preSubmit()">Salvar</button>
+
                             </div>
                         </div>
                     </div>
@@ -182,85 +174,63 @@ $queryPeriodo = mysqli_query(buscaconexao(), $queryBuscaPeriodo);
 
                     <form action="" class="ls-form ls-form-horizontal row" id="formulario-01">
                         <fieldset>
+                            <div id="botaocadastro" class="">
+                                <button data-ls-module="modal" data-target="#modalSmall" data-append-to="body" type="button" class="ls-btn-dark ls-ico-plus" style="margin: 2px;">Novo </button>
+                            </div>
                             <label class="ls-label col-md-5 col-xs-12" id="pesquisar">
                                 <b class="ls-label-text">Pesquisar:</b>
-                                <input type="text" placeholder="Informe o que deseja pesquisar" class="ls-field" required>
+                                <input type="text" id="search" name="search" placeholder="Informe o que deseja pesquisar" class="ls-field" required>
                             </label>
 
-                            <label class="ls-label col-md-4 col-xs-12" id="filtrar">
-                                <b class="ls-label-text">Filtrar por:</b>
-                                <div class="ls-custom-select">
-                                    <select name="" class="ls-select">
-                                        <option>Selecione o filtro</option>
-                                        <option>Tipo 01</option>
-                                        <option>Tipo 02</option>
-                                        <option>Tipo 03</option>
-                                        <option>Tipo 04</option>
-                                        <option>Tipo 05</option>
-                                    </select>
-                                </div>
-                            </label>
+                            <!--                            <label class="ls-label col-md-4 col-xs-12" id="filtrar">
+                                                            <b class="ls-label-text">Filtrar por:</b>
+                                                            <div class="ls-custom-select">
+                                                                <select name="" class="ls-select">
+                                                                    <option>Selecione o filtro</option>
+                                                                    <option>Tipo 01</option>
+                                                                    <option>Tipo 02</option>
+                                                                    <option>Tipo 03</option>
+                                                                    <option>Tipo 04</option>
+                                                                    <option>Tipo 05</option>
+                                                                </select>
+                                                            </div>
+                                                        </label>-->
 
                         </fieldset>
                         <!--           LISTA               -->
                     </form>
                     <div class="table-responsive" >  
-                    <div style="overflow: auto;height: 400px;"> 
-                    <table class="ls-table ls-table-striped">
-                        <thead>
-                            <tr>
-                                <th hidden="true"><b>ID</b></th>
-                                <th><b>Nome</b></th>
-                                <th><b>E-mail</b></th>
-                                <th><b>Período de Aula</b></th>
-                                <th><b>Perfil</b></th>
-                                <th><b>Permissão</b></th>
-                                <th><b>Editar</b></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            while ($usuario = mysqli_fetch_assoc($resultado)) {
-                                $idSelecionado = $usuario['PERIODO'];
-                                $op = "";
-                                while($PERIODO = mysqli_fetch_assoc($queryPeriodo)) {
-                                    if ($idSelecionado == $PERIODO['ID']) {
-                                        $op .= "<option selected value='" . $PERIODO['ID'] . "'>" . $PERIODO['DESCRICAO'] . "</option>";
-                                    }else {
-                                        $op .= "<option value='" . $PERIODO['ID'] . "'>" . $PERIODO['DESCRICAO'] . "</option>";
-                                    }
-                                }
-                               // mysql_free_result($queryPeriodo);
-                                if ($usuario['RESERVA'] == 1) {
-                                    $usuario['RESERVA'] = "SIM";
-                                    $reservar = "<div class='ls-label col-md-12 col-xs-12'>
-                          <p class='ls-label-text'>Pode reservar?</p>
-                          <label class='ls-label-text'>
-                            <input type='radio' checked name='plataforms' class='ls-field-radio'>
-                            Sim
-                          </label>
-                          <label class='ls-label-text'>
-                            <input type='radio'  name='plataforms' class='ls-field-radio'>
-                            Não
-                          </label>
-                          </div> </fieldset>";
-                                } else {
-                                    $usuario['RESERVA'] = "NÃO";
-                                    $reservar = "<div class='ls-label col-md-12 col-xs-12'>
-                          <p class='ls-label-text'>Pode reservar?</p>
-                          <label class='ls-label-text'>
-                            <input type='radio'  name='plataforms' class='ls-field-radio'>
-                            Sim
-                          </label>
-                          <label class='ls-label-text'>
-                            <input type='radio'  checked name='plataforms' class='ls-field-radio'>
-                            Não
-                          </label>
-                          </div> </fieldset>";
-                                }
+                        <div style="overflow: auto;height: 400px;"> 
+                            <table class="ls-table ls-table-striped">
+                                <thead>
+                                    <tr>
+                                        <th hidden="true"><b>ID</b></th>
+                                        <th><b>Nome</b></th>
+                                        <th><b>E-mail</b></th>
+                                        <th><b>Período de Aula</b></th>
+                                        <th><b>Perfil</b></th>
+                                        <th><b>Permissão</b></th>
+                                        <th><b>Editar</b></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="usuarios">
+<?php
+while ($usuario = mysqli_fetch_assoc($resultado)) {
 
 
-                                echo"      <tr>
+    // mysql_free_result($queryPeriodo);
+    if ($usuario['RESERVA'] == 1) {
+        $usuario['RESERVA'] = "SIM";
+        $reservar = "<input type='checkbox'  name='agendamento'>
+                 <input type='checkbox' checked name='agendamento'>";
+    } else {
+        $usuario['RESERVA'] = "NÃO";
+        $reservar = "<input type='checkbox' checked  name='agendamento'>
+                 <input type='checkbox'  name='agendamento'>";
+    }
+
+
+    echo"      <tr>
                                     <td hidden='true'>" . $usuario['ID'] . "</td>
                                     <td>" . $usuario['NOME'] . "</td>
                                     <td>" . $usuario['EMAIL'] . "</td>
@@ -268,10 +238,15 @@ $queryPeriodo = mysqli_query(buscaconexao(), $queryBuscaPeriodo);
                                     <td>" . $usuario['DESCRIPERFIL'] . "</td>
                                     <td>" . $usuario['RESERVA'] . "</td>
                                     <td><button data-ls-module='modal' data-target='#modaledicao" . $usuario['ID'] . "' type='button' onclick='setUser()' class='ls-btn ls-ico-pencil'></button>
-                                    <button data-ls-module='modal' data-target='#modalExcluir" . $usuario['ID'] . "' type='button' onclick='setUser()' class='ls-btn ls-ico-remove' ></button></td>
+                             <!--       <button data-ls-module='modal' data-target='#modalExcluir" . $usuario['ID'] . "' type='button' onclick='setUser()' class='ls-btn ls-ico-remove' ></button></td> -->
                                   
-<!--Modal de edição/exclusão-->
 
+      
+
+
+
+</tr>
+<!--Modal de edição/exclusão-->
       
       <div class='ls-modal' id='modaledicao" . $usuario['ID'] . "'>
         <div class='ls-modal-small'>
@@ -279,12 +254,14 @@ $queryPeriodo = mysqli_query(buscaconexao(), $queryBuscaPeriodo);
              <h4 id='titulomodal' class='ls-modal-title'>Editar usuário</h4>
           </div>
           <div class='ls-modal-body'>
-              <form id='' action='' class='ls-form row'>
+              <form id='' action='./controller/editaUsuario.php' method='post' class='ls-form row'>
                   <fieldset>
                     <label class='ls-label col-md-12 col-xs-12'>
                       <b class='ls-label-text'>Nome*</b>
                       <input type='text' name='NOME' value='" . $usuario['NOME'] . "' placeholder='Digite seu nome' class='ls-field' required>
+                         
                     </label>
+                      <input type='hidden' name='ID' placeholder='' required  value='" . $usuario['ID'] . "'>
                     <label class='ls-label col-md-12 col-xs-12'>
                       <b class='ls-label-text'>E-mail*</b>
                         <input type='text' name='EMAIL' value='" . $usuario['EMAIL'] . "' placeholder='Digite seu e-mail' class='ls-field' required> </label>          
@@ -310,50 +287,43 @@ $queryPeriodo = mysqli_query(buscaconexao(), $queryBuscaPeriodo);
                              <b class='ls-label-text'>Período de aula</b>
                              <div class='ls-custom-select'>
                                <select name='PERIODO' class='ls-select'>
-                                " . $op . "
+                                " . Periodo($usuario['PERIODO']) . "
                                </select>
                              </div>
                            </label>               
-                        " . $reservar . "              
-                               
-              </form>
-          </div>
-          <div class='ls-modal-footer'>
+                                        <div class='ls-label col-md-12 col-xs-12'>
+                                            <p class='ls-label-text'>Pode reservar?</p>
+                                            <div data-ls-module='switchButton' class='ls-switch-btn ls-float-center'>                      
+                                                " . $reservar . "
+                                                    <label class='ls-switch-label'  name='label-teste' ls-switch-off='NÃO' ls-switch-on='SIM'><span></span></label>
+                                            </div>
+                                        </div>        
+                                 <div class='ls-modal-footer'>
             <div id='botoes-edicao'>
               <button type='submit' class='ls-btn-primary'>Salvar</button>
-              <button class='ls-btn-primary'>Excluir</button>
               <button class='ls-btn-primary' data-dismiss='modal'>Cancelar</button>             
             </div>
+          </div>        
+              </form>
           </div>
+
         </div>
       </div>
-      
-
-
-
-</tr>
                                   ";
-                            }
-                            //  listaModal($usuario);
-                            ?>
-                        </tbody>
-                    </table>
-                    </form>
-                    </div>
-              </div>
-                </div>
+}
+?>
+                                </tbody>
+                            </table>
+                            </form>
 
+                        </div>
+
+                    </div>
+                </div>
             </div>
 
-
             <!--Essa parte é do footer, onde contém por quem é desenvolvido, a logo e o email-->
-            <footer class="ls-footer" role="contentinfo">
-                <nav class="ls-footer-menu">
-                    <h2 class="ls-title-footer">Desenvolvido por TechLab - Unidade Raja Gabáglia <br>
-                        <img src="img/logo-techlab.png" class="logo-techlab"></h2>
-                    <h2 class="ls-title-footer"> E-mail: techlab@pitagorasraja.net.br</h2>
-                </nav>
-            </footer>
+<?php require_once('model\footer.php'); ?>    
         </main>
 
         <script src="javascript/cadastro-usuario.js" type="text/javascript"></script>
@@ -368,9 +338,17 @@ $queryPeriodo = mysqli_query(buscaconexao(), $queryBuscaPeriodo);
         <script src="locaweb/panel-charts.js" type="text/javascript"></script>
 
         <script type="text/javascript">
-                                    $(window).on('load', function () {
-                                        locastyle.browserUnsupportedBar.init();
-                                    });
+                                        $(window).on('load', function () {
+                                            locastyle.browserUnsupportedBar.init();
+                                        });
+                                        $(document).ready(function () {
+                                            $("#search").on("keyup", function () {
+                                                var value = $(this).val().toLowerCase();
+                                                $("#usuarios tr").filter(function () {
+                                                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                                                });
+                                            });
+                                        });
         </script>
 
     </body>
