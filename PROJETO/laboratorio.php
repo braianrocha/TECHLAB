@@ -57,32 +57,26 @@ require_once ('./adminphp/conecta.php');
             <div class="container-fluid"> 
                 <!--Feito por Tainá :D-->
                 <h2 class="sub-titulo">Laboratório</h2> 
-                <button type="button" class="ls-btn-dark ls-ico-close" id="botoes">Cancelar</button>
+                
                 <!-- MODAL DE CADASTRAR LABORATÓRIO-->
+                <fieldset style="float: right"> 
                 <button data-ls-module="modal" data-target="#modalLarge"
                         class="ls-btn-dark ls-ico-plus" id="botao-modal botoes" data-append-to="body" >Novo</button>
-
+               </fieldset>
              <form action="laboratorio.php" method="GET" class="ls-form ls-form-horizontal row" id="formulario-01">
-                    <fieldset> <button type="submit" class="ls-btn-dark ls-ico-search" id="botoes">Buscar</button>
+                    <fieldset> 
                         <label class="ls-label col-md-5 col-xs-12" id="pesquisar">
                             <b class="ls-label-text">Pesquisar:</b>
-                            <input type="text" placeholder="Informe o que deseja pesquisar" class="ls-field" >
+                            <input type="text" name="search" id="search" placeholder="Informe o que deseja pesquisar" class="ls-field" >
                         </label>
 
                         <label class="ls-label col-md-4 col-xs-12" id="filtrar">
-                            <b class="ls-label-text">Filtrar por:</b>
-                            <div class="ls-custom-select">
-                                <select name="insumo" class="ls-select">
-                                    <?php listaInsumo() ?>
-                                </select>
-                            </div>
+
                         </label>
 
                     </fieldset>
                 </form>
                 <div class="tamanhoLista">
-                <div class="table-responsive" >  
-                    <div style="overflow: auto;height: 400px;"> 
                     <table id="listaLaboratorio" class="ls-table ls-table-striped">
                         <thead>
                             <tr>
@@ -92,8 +86,10 @@ require_once ('./adminphp/conecta.php');
                                 <th>Andar</th>
                                 <?php
                                 if ($_SESSION['PERFIL'] == 1) {
+                                    $_SESSION['PERFIL'] = 1;
                                     echo "<th>Editar</th>";
                                 } else {
+                                    $_SESSION['PERFIL'] = 0;
                                     echo "<th>Visualizar</th>";
                                 }
                                 ?>
@@ -108,8 +104,6 @@ require_once ('./adminphp/conecta.php');
                                                
                         </tbody>
                     </table>
-                        </div>
-                        </div>
                 </div>
                 
                 <div class="ls-modal"  id="modalLarge">
@@ -214,7 +208,14 @@ require_once ('./adminphp/conecta.php');
             selectionFooter: "<div class='custom-header'><span class='ls-ico-checkbox-checked' > Selecionados</div>"
         });
 
-
+                                                $(document).ready(function () {
+                $("#search").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#tbody tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
     </script>
 
 </body>

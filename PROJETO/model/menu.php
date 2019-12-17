@@ -21,7 +21,7 @@ if(perfilMenu() == 1){
               <img src="img/logo-pitagoras.png" class="logo-pitagoras">
               <h1 class="ls-brand-name"  id="menu">
               <img src="img/logo-usuario.png" class="logo-usuario"><br><a href="">'.nomeUsuarioLogado().'</a></h1>
-              <nav class="ls-menu" style="overflow: hidden">
+              <nav class="ls-menu" style="overflow-y:hidden; height: 400px;">
                 <ul style="overflow: hidden">
                       <li class="altmenu"><a href="inicial-adm.php" class="ls-ico-home linkmenu">Home</a></li>
                       <li class="altmenu"><a href="minha-conta.php" class=" ls-ico-user linkmenu">Minha Conta</a></li>
@@ -43,9 +43,10 @@ if(perfilMenu() == 1){
               <img src="img/logo-pitagoras.png" class="logo-pitagoras">
               <h1 class="ls-brand-name"  id="menu">
               <img src="img/logo-usuario.png" class="logo-usuario"><br><a href="#">'.nomeUsuarioLogado().'</a></h1>
-              <nav class="ls-menu" >
+              <nav class="ls-menu" style="overflow-y:hidden; height: 400px;">
                   <ul>
                       <li class="altmenu"><a href="inicial.php" class="ls-ico-home linkmenu">Home</a></li>
+                      <li class="altmenu"><a href="agendar-data.php" class=" ls-ico-plus linkmenu">Agendar por data </a></li>
                       <li class="altmenu"><a href="minha-conta.php" class=" ls-ico-user linkmenu">Minha Conta</a></li>
                       <li class="altmenu"><a href="agendamentos.php" class="linkmenu ls-ico-edit-admin" >Agendamentos</a></li>      
                         <li class="altmenu"><a href="laboratorio.php" class=" linkmenu ls-ico-screen" role="menuitem">Laboratórios</a></li>

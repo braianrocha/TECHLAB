@@ -19,7 +19,9 @@ function listaCurso(){
                   <td>
                         <button  data-ls-module='modal' data-target='#modalSmall".$curso['ID']."' class='ls-btn ls-ico-pencil'></button>
                         <button  data-ls-module='modal' data-target='#deletemodalSmall".$curso['ID']."' class='ls-btn ls-ico-remove'></button>
-                            <!-- MODAL PARA EDITAR -->
+                         
+                    </td>
+                       <!-- MODAL PARA EDITAR -->
                           <div class='ls-modal' id='modalSmall".$curso['ID']."'>
                             <div class='ls-modal-small'>
                               <div class='ls-modal-header'>
@@ -41,7 +43,7 @@ function listaCurso(){
                                         </label>
                                         <div class='ls-modal-footer'>
                                               <button class='ls-btn-dark ls-float-right ls-ico-close' data-dismiss='modal' style='margin: 3px;'>Cancelar</button>
-                                              <button type='submit' class='ls-btn-dark ls-ico-checkmark' style='margin: 3px; float:left;'>Salvar</button>   
+                                              <button type='submit' class='ls-btn-dark ls-ico-checkmark' style='margin: 3px; float:left;'>Salvar</button> 
                                         </div>
                                     </form>
                               </div>
@@ -70,7 +72,6 @@ function listaCurso(){
                                  </div>
                             </div>
                           </div>
-                    </td>
              </tr> ";    
         
     }

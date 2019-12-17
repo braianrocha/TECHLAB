@@ -34,7 +34,7 @@ $select = mysqli_query($conexao, $query);
       
         if($_SESSION['PERFIL'] == 1){
             // Se deletou , redireciona com mensagem de sucesso.
-        $_SESSION['msg'] = "MSG06";
+        $_SESSION['msg'] = "MSG22";
         header('Location: ../inicial-adm.php');
         die();
         }else{

@@ -65,13 +65,13 @@ require_once('./controller/controllerinsumo.php');
       <fieldset>
         <label class="ls-label col-md-5 col-xs-12" id="pesquisar">
           <b class="ls-label-text" >Pesquisar:</b>
-          <input type="text" placeholder="Informe o que deseja pesquisar" class="ls-field-md" required>
+          <input type="text" name="search" id="search" placeholder="Informe o que deseja pesquisar" class="ls-field-md" required>
         </label>
       </fieldset>
     </form>
 
     <!--Insumos-->
-    <div class="table-responsive" >  
+      <div class="table-responsive" >  
       <div style="overflow: auto;height: 400px;"> 
       <table class="ls-table ls-table-striped">
         <thead>
@@ -81,12 +81,10 @@ require_once('./controller/controllerinsumo.php');
             <th id="editar"><b>Editar</b></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="insumos">
           <?php listaInsumo(); ?>
         </tbody>
       </table>
-  </div>
-  </div>
     </div>
     </div>
 
@@ -137,6 +135,14 @@ require_once('./controller/controllerinsumo.php');
     $(window).on('load', function() {
       locastyle.browserUnsupportedBar.init();
     });
+                                                    $(document).ready(function () {
+                $("#search").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#insumos tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
   </script>
 
 </body>
