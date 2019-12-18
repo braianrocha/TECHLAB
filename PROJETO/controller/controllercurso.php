@@ -14,7 +14,7 @@ function listaCurso(){
         // Cria a LINHA  
         echo "<!-- LINHA DO CURSO -->
             <tr>
-                <td><a href='' title='' class='ls-ico-screen'>".$curso["DESCTIPO"]."</a></td>
+                <td><a class='ls-ico-screen'>".$curso["DESCTIPO"]."</a></td>
                 <td>".$curso["DESC"]."</td>
                   <td>
                         <button  data-ls-module='modal' data-target='#modalSmall".$curso['ID']."' class='ls-btn ls-ico-pencil'></button>

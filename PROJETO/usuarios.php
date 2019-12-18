@@ -82,7 +82,7 @@ while ($rowPerfil = $resultadoPerfil->fetch(PDO::FETCH_ASSOC)) {
             <span class="ls-show-sidebar ls-ico-menu"></span>
         </div>
         <!--Barra Vertical de Menu (Contém a logo de usuário,logo do pitagoras e os menus para acessar)-->
-<?php require_once('./model/menu.php'); ?>
+        <?php require_once('./model/menu.php'); ?>
 
         <!-- Aqui inicia o conteúdo da pagina -->
         <main class="ls-main ">
@@ -90,12 +90,12 @@ while ($rowPerfil = $resultadoPerfil->fetch(PDO::FETCH_ASSOC)) {
                 <div class="container-fluid">
 
                     <!--Feito por Henrique-->
-<?php
+                    <?php
 // verifica se existe alguma mensagem pra ser enviada para o usuário
-if ((isset($_SESSION['msg']))) {
-    require_once('./mensagem.php');
-}
-?>
+                    if ((isset($_SESSION['msg']))) {
+                        require_once('./mensagem.php');
+                    }
+                    ?>
                     <h2 class="sub-titulo">Usuários</h2>
 
 
@@ -106,49 +106,49 @@ if ((isset($_SESSION['msg']))) {
                     <!--Modal de cadastro - Novo curso-->
 
                     <div class="ls-modal" id="modalSmall">
-                        <div class="ls-modal-small">
+                        <div class="ls-modal-large">
                             <div class="ls-modal-header">
                                 <h4 id="titulomodal" class="ls-modal-title">Novo usuário</h4>
                             </div>
                             <div class="ls-modal-body">
-                                <form id="formAddUser" action="./controller/adicionaUsuario.php" class="ls-form row" method="post">
+                                <form id="formAddUser" action="./controller/adicionaUsuario.php"class="ls-form ls-form-horizontal row" method="post">
                                     <fieldset>
-                                        <label class="ls-label col-md-12 col-xs-12">
+                                        <label class="ls-label col-md-5 col-xs-12" >
                                             <b class="ls-label-text">Nome*</b>
                                             <input type="text" id="inputAddNome" name="nome" placeholder="Digite seu nome" class="ls-field" required>
                                         </label>
-                                        <label class="ls-label col-md-12 col-xs-12">
+                                        <label class="ls-label col-md-5 col-xs-12" >
                                             <b class="ls-label-text">E-mail*</b>
                                             <input type="text" id="inputAddEmail" name="email" placeholder="Digite seu e-mail" class="ls-field" required>    </label>
                                     </fieldset>
 
                                     <fieldset>
-                                        <label class="ls-label col-md-12 col-xs-12">
+                                        <label class="ls-label col-md-5 col-xs-12" >
                                             <b class="ls-label-text">CPF*</b>
                                             <input type="text" id="inputAddCpf" name="cpf" placeholder="000.000.000-00" class="ls-field ls-mask-cpf" required>
                                         </label>
 
-                                        <label class="ls-label col-md-12 col-xs-12">
+                                        <label class="ls-label col-md-5 col-xs-12" >
                                             <b class="ls-label-text">Perfil</b>
                                             <div class="ls-custom-select">
                                                 <select name="perfil" id="inputAddPerfil" class="ls-select">
-<?php echo $optionPerfil ?>
+                                                    <?php echo $optionPerfil ?>
                                                 </select>
                                             </div>
                                         </label>
                                     </fieldset>
 
                                     <fieldset>
-                                        <label class="ls-label col-md-12 col-xs-12">
+                                        <label class="ls-label col-md-5 col-xs-12" >
                                             <b class="ls-label-text">Período de aula</b>
                                             <div class="ls-custom-select">
                                                 <select name="turno" id="inputAddTurno" class="ls-select">
-<?php echo $optionPeri ?>
+                                                    <?php echo $optionPeri ?>
                                                 </select>
                                             </div>
                                         </label>
 
-                                        <div class="ls-label col-md-12 col-xs-12">
+                                        <label class="ls-label col-md-5 col-xs-12" >
                                             <p class="ls-label-text">Pode reservar?</p>
                                             <div data-ls-module="switchButton" class="ls-switch-btn ls-float-center">                      
                                                 <input type='checkbox'  name='agendamento'>
@@ -156,13 +156,14 @@ if ((isset($_SESSION['msg']))) {
                                                 <label class="ls-switch-label"  name="label-teste" ls-switch-off="NÃO" ls-switch-on="SIM"><span></span></label>
                                             </div>
                                         </div>     </fieldset>
-                                    <button class="ls-btn ls-float-right" data-dismiss="modal">Cancelar</button>
+ 
+                                                                <div class="ls-modal-footer">
+                                   <button class="ls-btn ls-float-right" data-dismiss="modal">Cancelar</button>
                                     <button type="submit" class="ls-btn-primary" onclick="preSubmit()">Salvar</button>
+                            </div>
                                 </form>
                             </div>
-                            <div class="ls-modal-footer">
 
-                            </div>
                         </div>
                     </div>
 
@@ -214,23 +215,23 @@ if ((isset($_SESSION['msg']))) {
                                     </tr>
                                 </thead>
                                 <tbody id="usuarios">
-<?php
-while ($usuario = mysqli_fetch_assoc($resultado)) {
+                                    <?php
+                                    while ($usuario = mysqli_fetch_assoc($resultado)) {
 
 
-    // mysql_free_result($queryPeriodo);
-    if ($usuario['RESERVA'] == 1) {
-        $usuario['RESERVA'] = "SIM";
-        $reservar = "<input type='checkbox'  name='agendamento'>
+                                        // mysql_free_result($queryPeriodo);
+                                        if ($usuario['RESERVA'] == 1) {
+                                            $usuario['RESERVA'] = "SIM";
+                                            $reservar = "<input type='checkbox'  name='agendamento'>
                  <input type='checkbox' checked name='agendamento'>";
-    } else {
-        $usuario['RESERVA'] = "NÃO";
-        $reservar = "<input type='checkbox' checked  name='agendamento'>
+                                        } else {
+                                            $usuario['RESERVA'] = "NÃO";
+                                            $reservar = "<input type='checkbox' checked  name='agendamento'>
                  <input type='checkbox'  name='agendamento'>";
-    }
+                                        }
 
 
-    echo"      <tr>
+                                        echo"      <tr>
                                     <td hidden='true'>" . $usuario['ID'] . "</td>
                                     <td>" . $usuario['NOME'] . "</td>
                                     <td>" . $usuario['EMAIL'] . "</td>
@@ -310,8 +311,8 @@ while ($usuario = mysqli_fetch_assoc($resultado)) {
         </div>
       </div>
                                   ";
-}
-?>
+                                    }
+                                    ?>
                                 </tbody>
                             </table>
                             </form>
@@ -323,7 +324,7 @@ while ($usuario = mysqli_fetch_assoc($resultado)) {
             </div>
 
             <!--Essa parte é do footer, onde contém por quem é desenvolvido, a logo e o email-->
-<?php require_once('model\footer.php'); ?>    
+            <?php require_once('model\footer.php'); ?>    
         </main>
 
         <script src="javascript/cadastro-usuario.js" type="text/javascript"></script>

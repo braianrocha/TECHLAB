@@ -57,15 +57,7 @@ $query = "INSERT INTO AGENDAMENTO (DATA_SOLIC , USUARIO_ID , DATA_AG, PERIODO_ID
      //echo $query;
  }
  
-
-
-
- 
- 
- 
 $query = "INSERT INTO AGENDAMENTO (DATA_SOLIC , USUARIO_ID , DATA_AG, PERIODO_ID,CURSO_ID,SITUACAO_SOLIC_ID,LABORATORIO_ID)"
        . "VALUES ('".$dataAtual."', ".$idUser." , '".$dataAgendamento."' , ".$periodo.", ".$curso." ,".aprovacaoAgendamento()." ,".$id.")";
-
-
 
 //echo $query;
