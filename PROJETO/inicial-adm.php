@@ -3,7 +3,7 @@ require_once('./adminphp/verificausuario.php');
 verificaLogin();
 require_once('./adminphp/conecta.php');
 
-$query = "SELECT AGENDA.INFO_ADC ,AGENDA.ID AS ID , PROF.NOME AS USUARIO ,PER.DESCRICAO AS PERFIL ,AGENDA.DATA_AG,PERI.DESCRICAO AS PERIODODESCRI,SOLICITACAO.DESCRICAO AS SOLICITACAODESCRI, TIPOLAB.DESCRICAO AS TIPOLABDESCRI,LAB.DESCRICAO AS LABDESCRI,LAB.SALA AS LABSALA,LAB.ANDAR AS LABANDAR , TIPOLAB.ID AS IDTIPOLAB
+$query = "SELECT AGENDA.ID AS ID , PROF.NOME AS USUARIO ,PER.DESCRICAO AS PERFIL ,AGENDA.DATA_AG,PERI.DESCRICAO AS PERIODODESCRI,SOLICITACAO.DESCRICAO AS SOLICITACAODESCRI, TIPOLAB.DESCRICAO AS TIPOLABDESCRI,LAB.DESCRICAO AS LABDESCRI,LAB.SALA AS LABSALA,LAB.ANDAR AS LABANDAR , TIPOLAB.ID AS IDTIPOLAB
 FROM AGENDAMENTO AGENDA
 INNER JOIN PERIODO PERI ON PERI.ID = AGENDA.PERIODO_ID
 INNER JOIN SIT_SOLICITACAO SOLICITACAO ON SOLICITACAO.ID = AGENDA.SITUACAO_SOLIC_ID
@@ -68,7 +68,7 @@ $resultado = mysqli_query($conexao, $query);
                         <tr>
                             <th style="display: none" >ID</th>
                             <th>Usuário</th>
-                            <th></th>
+                            <th>Perfil</th>
                             <th>Tipo</th>
                             <th>Laboratório</th>
                             <th>Data</th>
@@ -79,11 +79,6 @@ $resultado = mysqli_query($conexao, $query);
                     <tbody>
                         <?php
                         while ($meusAgendamentos = mysqli_fetch_assoc($resultado)) {
-                            if($meusAgendamentos['INFO_ADC'] != ""){
-                                $ObsAdicional = "<td><a href='#' class='ls-ico-help' data-placement='right' data-ls-module='popover' title='Titulo' data-content='".$meusAgendamentos['INFO_ADC'].".'></a></td>";
-                            }else{
-                                $ObsAdicional = "<td></td>";
-                            }
                             //CONVERTENDO A DATA PARA  DIA/MES/ANO
                             $meusAgendamentos['DATA_AG'] = date("d/m/Y", strtotime($meusAgendamentos['DATA_AG']));
                             switch ($meusAgendamentos['IDTIPOLAB']) {
@@ -101,7 +96,7 @@ $resultado = mysqli_query($conexao, $query);
                                         <tr>
                                             <td style='display: none' > " . $meusAgendamentos['ID'] . " </td>
                                             <td>" . $meusAgendamentos['USUARIO'] . "</td>
-                                            ".$ObsAdicional." 
+                                            <td>" . $meusAgendamentos['PERFIL'] . "</td>
                                             <td class='$icone'>" . $meusAgendamentos['TIPOLABDESCRI'] . "</td>
                                             <td>" . $meusAgendamentos['LABDESCRI'] . "</td>
                                             <td>" . $meusAgendamentos['DATA_AG'] . "</td>

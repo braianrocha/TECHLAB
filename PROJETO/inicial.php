@@ -1,20 +1,20 @@
 <?php
 require_once('./adminphp/conecta.php');
-require_once('./adminphp/verificausuario.php');
+require_once('./adminphp/verificausuario.php'); 
 $query = "SELECT  AGENDA.INFO_ADC AS INFO_ADC , AGENDA.ID AS ID ,AGENDA.DATA_AG,PERI.DESCRICAO AS PERIODODESCRI, AGENDA.SITUACAO_SOLIC_ID AS SOLIC ,SOLICITACAO.DESCRICAO AS SOLICITACAODESCRI, TIPOLAB.DESCRICAO AS TIPOLABDESCRI,LAB.DESCRICAO AS LABDESCRI,LAB.SALA AS LABSALA,LAB.ANDAR AS LABANDAR , TIPOLAB.ID AS IDTIPOLAB
 FROM AGENDAMENTO AGENDA
 INNER JOIN PERIODO PERI ON PERI.ID = AGENDA.PERIODO_ID
 INNER JOIN SIT_SOLICITACAO SOLICITACAO ON SOLICITACAO.ID = AGENDA.SITUACAO_SOLIC_ID
 INNER JOIN LABORATORIO LAB ON LAB.ID = AGENDA.LABORATORIO_ID
 INNER JOIN TIPO_LABORATORIO TIPOLAB ON LAB.TIPO_LAB_ID = TIPOLAB.ID 
-WHERE AGENDA.USUARIO_ID = " . idUsuarioLogado() . " AND AGENDA.DATA_AG > NOW()
+WHERE AGENDA.USUARIO_ID = ". idUsuarioLogado() ." AND AGENDA.DATA_AG > NOW()
 ORDER BY AGENDA.DATA_AG;";
 
-$resultado = mysqli_query($conexao, $query);
+  $resultado = mysqli_query($conexao,$query);
 
-$queryReserva = "SELECT RESERVA FROM USUARIO WHERE ID = " . idUsuarioLogado();
+$queryReserva = "SELECT RESERVA FROM USUARIO WHERE ID = ". idUsuarioLogado();
 
-$reserva = mysqli_query($conexao, $queryReserva);
+$reserva = mysqli_query($conexao,$queryReserva);
 $reserva = mysqli_fetch_array($reserva);
 
 //$reserva = mysqli_fetch_assoc($reserva);
@@ -56,28 +56,23 @@ $reserva = mysqli_fetch_array($reserva);
             <span class="ls-show-sidebar ls-ico-menu"></span>
         </div>
         <!--Barra Vertical de Menu (Contém a logo de usuário,logo do pitagoras e os menus para acessar)-->
-        <?php require_once('./model/menu.php'); ?>
+<?php require_once('./model/menu.php'); ?>
 
         <!-- Aqui inicia o conteúdo da pagina -->
         <main class="ls-main ">
             <div class="container-fluid"> 
-                <?php
-                // verifica se existe alguma mensagem pra ser enviada para o usuário
-                if ((isset($_SESSION['msg']))) {
-                    require_once('./mensagem.php');
-                }
-                ?>
                 <!--Feito por Tainá :D-->
 
                 <h2 class="sub-titulo">Olá, <?php echo $_SESSION['NOME'] ?></h2> 
 
                 <!-- MODAL DE AGENDAR LABORATÓRIO-->
                 <?php
-                if ($reserva['RESERVA'] == 1) {
+                if($reserva['RESERVA'] == 1){
                     echo "<button  data-ls-module='modal' data-target='#myAwesomeModal' class='ls-btn-primary' id='botao-modal'>Agendar Laboratório</button>";
-                } else {
+                }else {
                     echo "<button disabled data-ls-module='modal' data-target='#myAwesomeModal' class='ls-btn-primary' id='botao-modal'>Agendar Laboratório</button>";
                 }
+                   
                 ?>
                 <div class="ls-modal" id="myAwesomeModal">
                     <div class="ls-modal-box">
@@ -90,36 +85,36 @@ $reserva = mysqli_fetch_array($reserva);
                                 <br> Por data ou por Laboratório?</p>
                         </div>
                         <div class="ls-modal-footer">
-                            <button class="ls-btn ls-float-right" data-dismiss="modal">Fechar</button>
-                            <a href="agendar-data.php"><button type="submit" class="ls-btn-primary">Por Data</button></a>
-                            <a href="agendar-laboratorio.php"><button type="submit" class="ls-btn-primary">Por Laboratório</button></a>
+                            <button class="ls-btn ls-ico-close ls-float-right" data-dismiss="modal">Fechar</button>
+                            <a href="agendar-data.php"><button type="submit" class="ls-btn-primary ls-ico-calendar">Por Data</button></a>
+                            <a href="agendar-laboratorio.php"><button type="submit" class="ls-btn-primary ls-ico-screen">Por Laboratório</button></a>
                         </div>
                     </div>
                 </div>
                 <!-- fim do modal -->
                 <!-- Essa parte é da tabela que consta os agendamentos ativos do professor-->
                 <h3 class="meus-agendamentos"> Meus Agendamentos</h3>
-                <div style="overflow: auto;height: 400px; border:dotted 1px #fddce0">
-                    <table class="ls-table ls-table-striped">
-                        <thead>
-                            <tr>
-                                <th style="display: none" >ID</th>
-                                <th>Data</th>
-                                <th>Situação</th>
-                                <th>Período</th>
-                                <th>Tipo</th>
-                                <th>Laboratório</th>
-                                <th>Sala</th>
-                                <th>Andar</th>
-                                <th>Cancelar </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            while ($meusAgendamentos = mysqli_fetch_assoc($resultado)) {
-                                //CONVERTENDO A DATA PARA  DIA/MES/ANO
+<div style="overflow: auto;height: 400px; border:dotted 1px #fddce0">
+                <table class="ls-table ls-table-striped">
+                    <thead>
+                        <tr>
+                            <th style="display: none" >ID</th>
+                            <th>Data</th>
+                            <th>Situação</th>
+                            <th>Período</th>
+                            <th>Tipo</th>
+                            <th>Laboratório</th>
+                            <th>Sala</th>
+                            <th>Andar</th>
+                            <th>Cancelar </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            while($meusAgendamentos = mysqli_fetch_assoc($resultado)){
+                               //CONVERTENDO A DATA PARA  DIA/MES/ANO
                                 $meusAgendamentos['DATA_AG'] = date("d/m/Y", strtotime($meusAgendamentos['DATA_AG']));
-                                switch ($meusAgendamentos['IDTIPOLAB']) {
+                                switch($meusAgendamentos['IDTIPOLAB']){
                                     case 1 : $icone = "ls-ico-screen";
                                         break;
                                     case 2 : $icone = "ls-ico-edit-admin";
@@ -129,29 +124,29 @@ $reserva = mysqli_fetch_array($reserva);
                                     default: $icone = "ls-ico-screen";
                                         break;
                                 }
-                                if ($meusAgendamentos['SOLIC'] == "C") {
-                                    $botaoCancelar = "<button  data-ls-module='modal' data-target='#infomodalSmall" . $meusAgendamentos['ID'] . "' class='ls-btn ls-ico-info'></button> ";
-                                } else {
-                                    $botaoCancelar = "<button  data-ls-module='modal' data-target='#deletemodalSmall" . $meusAgendamentos['ID'] . "' class='ls-btn ls-ico-remove'></button> ";
+                                if($meusAgendamentos['SOLIC'] == "C"){
+                                      $botaoCancelar = "<button  data-ls-module='modal' data-target='#infomodalSmall".$meusAgendamentos['ID']."' class='ls-btn ls-ico-info'></button> ";
+                                }else{
+                                    $botaoCancelar = "<button  data-ls-module='modal' data-target='#deletemodalSmall".$meusAgendamentos['ID']."' class='ls-btn ls-ico-remove'></button> ";
                                 }
-
-                                echo"
+                                
+                                    echo"
                                         <tr>
-                                            <td style='display: none' > " . $meusAgendamentos['ID'] . " </td>
-                                            <td>" . $meusAgendamentos['DATA_AG'] . "</td>
-                                            <td>" . $meusAgendamentos['SOLICITACAODESCRI'] . "</td>
-                                            <td>" . $meusAgendamentos['PERIODODESCRI'] . "</td>
-                                            <td class='$icone'><a href='' title=''>" . $meusAgendamentos['TIPOLABDESCRI'] . "</a></td>
-                                            <td>" . $meusAgendamentos['LABDESCRI'] . "</td>
-                                            <td>" . $meusAgendamentos['LABSALA'] . "</td>
-                                            <td>" . $meusAgendamentos['LABANDAR'] . "</td>
+                                            <td style='display: none' > ".$meusAgendamentos['ID']." </td>
+                                            <td>".$meusAgendamentos['DATA_AG']."</td>
+                                            <td>".$meusAgendamentos['SOLICITACAODESCRI']."</td>
+                                            <td>".$meusAgendamentos['PERIODODESCRI']."</td>
+                                            <td class='$icone'><a href='' title=''>".$meusAgendamentos['TIPOLABDESCRI']."</a></td>
+                                            <td>".$meusAgendamentos['LABDESCRI']."</td>
+                                            <td>".$meusAgendamentos['LABSALA']."</td>
+                                            <td>".$meusAgendamentos['LABANDAR']."</td>
                                             <td>
-                                            " . $botaoCancelar . "
+                                            ".$botaoCancelar."
                                                 
                                             
                                             </td>
                                                                           <!-- MODAL PARA DELETAR -->
-                          <div class='ls-modal' id='deletemodalSmall" . $meusAgendamentos['ID'] . "'>
+                          <div class='ls-modal' id='deletemodalSmall".$meusAgendamentos['ID']."'>
                             <div class='ls-modal-small'>
                               <div class='ls-modal-header'>
                                 <button data-dismiss='modal'>&times;</button>
@@ -159,9 +154,9 @@ $reserva = mysqli_fetch_array($reserva);
                               </div>
                               <div class='ls-modal-body'>
                                  <form action='controller/cancelaragendamento.php'  method='post' class='ls-form-inline row' >
-                                        <input type='hidden' name='ID' placeholder='' required  value='" . $meusAgendamentos['ID'] . "'>
+                                        <input type='hidden' name='ID' placeholder='' required  value='".$meusAgendamentos['ID']."'>
                                         <p><h3>Confirma exclusão do agendamento? 
-                                        <br><br><center>Data do agendamento:<br>  <p style='color: red; font-size:20px'>" . $meusAgendamentos['DATA_AG'] . "<br><br>" . $meusAgendamentos['LABDESCRI'] . "</p></h3></center>
+                                        <br><br><center>Data do agendamento:<br>  <p style='color: red; font-size:20px'>".$meusAgendamentos['DATA_AG']."<br><br>".$meusAgendamentos['LABDESCRI']."</p></h3></center>
                                         <br><p> Essa operação não pode ser desfeita.</p>
                                         </div>
                                         <div class='ls-modal-footer'>
@@ -175,7 +170,7 @@ $reserva = mysqli_fetch_array($reserva);
                           </div>
                           
 
-                          <div class='ls-modal' id='infomodalSmall" . $meusAgendamentos['ID'] . "'>
+                          <div class='ls-modal' id='infomodalSmall".$meusAgendamentos['ID']."'>
                             <div class='ls-modal-small'>
                               <div class='ls-modal-header'>
                                 <button data-dismiss='modal'>&times;</button>
@@ -183,10 +178,10 @@ $reserva = mysqli_fetch_array($reserva);
                               </div>
                               <div class='ls-modal-body'>
                                  <form  method='post' class='ls-form-inline row' >
-                                        <input type='hidden' name='ID' placeholder='' required  value='" . $meusAgendamentos['ID'] . "'>
+                                        <input type='hidden' name='ID' placeholder='' required  value='".$meusAgendamentos['ID']."'>
                                           <label class='ls-label'>
                                         <b class='ls-label-text'>Motivo do cancelamento :</b>
-                                        <textarea rows='4' required name='INFO_ADC''>" . $meusAgendamentos['INFO_ADC'] . "</textarea>
+                                        <textarea rows='4' required name='INFO_ADC''>".$meusAgendamentos['INFO_ADC']."</textarea>
                                       </label>
                                         </div>
                                         <div class='ls-modal-footer'>
@@ -201,13 +196,14 @@ $reserva = mysqli_fetch_array($reserva);
                           
                                         </tr>
                         ";
-                            }
-                            ?>
+  
+                              }
+            ?>
 
-                        </tbody>
-                    </table>
-                </div>
+                    </tbody>
+                </table>
             </div>
+                </div>
             <!--Fim da tabela-->
 
             <!--Essa parte é do footer, onde contém por quem é desenvolvido, a logo e o email-->

@@ -11,8 +11,8 @@ INNER JOIN LABORATORIO LAB ON LAB.ID = AGENDA.LABORATORIO_ID
 INNER JOIN USUARIO USER ON AGENDA.USUARIO_ID = USER.ID
 INNER JOIN TIPO_LABORATORIO TIPOLAB ON LAB.TIPO_LAB_ID = TIPOLAB.ID 
 WHERE  AGENDA.DATA_AG < NOW()
-ORDER BY AGENDA.DATA_AG DESC LIMIT 40;";
-// LIMITANDO A 40 linhas exibidas no historico
+ORDER BY AGENDA.DATA_AG DESC;";
+
 $resultado = mysqli_query($conexao, $query);
 ?>
 
@@ -67,10 +67,10 @@ $resultado = mysqli_query($conexao, $query);
                     <fieldset>
                         <label class="ls-label col-md-5 col-xs-12" id="pesquisar">
                             <b class="ls-label-text">Pesquisar:</b>
-                            <input type="text" name="search" id="search" placeholder="Informe o que deseja pesquisar" class="ls-field" required>
+                            <input type="text" placeholder="Informe o que deseja pesquisar" class="ls-field" required>
                         </label>
 
-<!--
+
                         <label class="ls-label col-md-4 col-xs-12" id="filtrar">
                             <b class="ls-label-text">Filtrar por:</b>
 
@@ -84,17 +84,15 @@ $resultado = mysqli_query($conexao, $query);
                                     <option>Tipo 05</option>
                                 </select>
                             </div>
-                        </label>-->
+                        </label>
 
                         <fieldset>
-<!--                            <button type="button" class="ls-btn-dark ls-ico-close" id="botoes">Cancelar</button>
-                            <button type="button" class="ls-btn-dark ls-ico-search" id="botoes">Buscar</button>-->
+                            <button type="button" class="ls-btn-dark ls-ico-close" id="botoes">Cancelar</button>
+                            <button type="button" class="ls-btn-dark ls-ico-search" id="botoes">Buscar</button>
                         </fieldset>  
 
                     </fieldset>
                 </form>
-                                <div class="table-responsive" >  
-                    <div style="overflow: auto;height: 400px;"> 
                 <table class="ls-table ls-table-striped">
                     <thead>
                         <tr>
@@ -110,7 +108,7 @@ $resultado = mysqli_query($conexao, $query);
                            
                         </tr>
                     </thead>
-                    <tbody id="agendamento">
+                    <tbody>
                         <?php
                             while($meusAgendamentos = mysqli_fetch_assoc($resultado)){
                                //CONVERTENDO A DATA PARA  DIA/MES/ANO
@@ -145,8 +143,7 @@ $resultado = mysqli_query($conexao, $query);
                     </tbody>
                 </table>
             </div>
-          </div>
-        </div>
+
             <!--Essa parte é do footer, onde contém por quem é desenvolvido, a logo e o email-->
 <?php require_once('model\footer.php'); ?>
         </main>
@@ -161,14 +158,6 @@ $resultado = mysqli_query($conexao, $query);
         <script type="text/javascript">
             $(window).on('load', function () {
                 locastyle.browserUnsupportedBar.init();
-            });
-                        $(document).ready(function () {
-                $("#search").on("keyup", function () {
-                    var value = $(this).val().toLowerCase();
-                    $("#agendamento tr").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
             });
         </script>
 

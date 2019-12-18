@@ -62,21 +62,21 @@ verificaNivel();
 
                 <!-- Botões de Buscar \ Cancelar \ Salvar -->
                 <!--A GO RA  -->
-                
-                
+                <button type="button" class="ls-btn-dark ls-ico-close" style="margin: 3px;">Cancelar</button>
+                <button data-ls-module="modal" data-target="#modalsmall" style="margin: 3px" class="ls-btn-dark ls-ico-plus" data-append-to="body">Novo</button>
 
                 <div class="ls-modal" id="modalsmall">
-                    <div class="ls-modal-small">
+                    <div class="ls-modal-large">
                         <div class="ls-modal-header">
                             <button data-dismiss="modal">&times;</button>
                             <h4 class="ls-modal-title">Novo Curso</h4>
                         </div>
                         <!--MODAL QUE ADICONA UM NOVO CURSO -->
                         <div class="ls-modal-body">
-                            <form action='controller/adicionaCurso.php'  method='post' class='ls-form row' >
-                                <label class="ls-label col-md-4 col-xs-12 ls-form row" style="margin-left: 0px;  width: 355px;">
+                            <form action='controller/adicionaCurso.php'  method='post' class='ls-form-inline row' >
+                                <label class="ls-label col-md-10 ls-form-inline row" >
                                     <b class="ls-label-text">Curso: </b>
-                                    <input type="text"  name="DESC" placeholder="" required  >
+                                    <input type="text"  name="DESC" placeholder="" required >
                                 </label>
                                 <label class="ls-label col-md-4 col-xs-12" id="filtrar">
                                     <b class="ls-label-text">Tipo de curso:</b>
@@ -92,43 +92,41 @@ verificaNivel();
                                 </label>  
                                 <div class="ls-modal-footer">
                                     <button class="ls-btn-dark ls-ico-close" style="margin: 3px" data-dismiss="modal">Cancelar</button>
-                                    <button type="submit" class="ls-btn-dark ls-ico-checkmark" style="margin: 3px; float:left;">Salvar</button>
+                                    <button type="submit ls-ico-checkmark" class="ls-btn-dark ls-ico-checkmark" style="margin: 3px;">Salvar</button>
                                 </div>
                             </form>
                         </div>
 
                     </div>
                 </div>
-                
+                <button type="button" class="ls-btn-dark ls-ico-search" style="margin: 3px;">Buscar </button>
                 <!--<button data-ls-module="modal"  class="ls-btn-dark ls-ico-plus" style="margin: 3px;" data-content="" data-title="Novo Curso" data-class="ls-btn-danger" data-save="Salvar" data-close="Fechar" class="ls-btn-primary"> Novo</button> -->
                 <! -- Campos Pesquisar / filtrar por -- >
 
                 <form action="" class="ls-form ls-form-horizontal row" id="formulario-01">
                     <fieldset>
-                        <button data-ls-module="modal" data-target="#modalsmall" style="margin: 3px" class="ls-btn-dark ls-ico-plus" data-append-to="body">Novo</button>
                         <label class="ls-label col-md-5 col-xs-12" id="pesquisar">
                             <b class="ls-label-text">Pesquisar:</b>
-                            <input type="text" name="search" id="search" placeholder="Informe o que deseja pesquisar" class="ls-field" required>
+                            <input type="text" name="search" id="search" class="form-control" />  
                         </label>
-<!--
+
                         <label class="ls-label col-md-4 col-xs-12" id="filtrar">
                             <b class="ls-label-text">Filtrar por:</b>
                             <div class="ls-custom-select">
                                 <select name="listaCurso" class="ls-select">
-                                     Adiciona as opções do banco de dados na lista 
+                                    <!-- Adiciona as opções do banco de dados na lista -->
                                     <option>Selecione o filtro</option>
-                                    <?php// listaTipoCurso(); ?>
+                                    <?php listaTipoCurso(); ?>
                                 </select>
                             </div>
-                        </label>-->
+                        </label>
 
                     </fieldset>
                 </form>        
                 <! -- Configuração da TABELA -- >
-                
-                 <div class="table-responsive" >     
-                     <div style="overflow: auto;height: 400px;"> 
-                    <table class="ls-table ls-table-striped">
+                <div class="table-responsive" >  
+                    <div style="overflow: auto;height: 400px; border:dotted 1px"> 
+                        <table id="listaCursos" class="ls-table ls-table-striped">
                             <thead>
                                 <tr>
                                     <th>Tipo</th>
@@ -140,8 +138,8 @@ verificaNivel();
                                 <?php listaCurso(); ?>
                             </tbody>
                         </table>
-                     </div>
-                 </div>
+                    </div>
+                </div>
 
             </div>
 

@@ -57,21 +57,25 @@ require_once ('./adminphp/conecta.php');
             <div class="container-fluid"> 
                 <!--Feito por Tainá :D-->
                 <h2 class="sub-titulo">Laboratório</h2> 
-                
+                <button type="button" class="ls-btn-dark ls-ico-close" id="botoes">Cancelar</button>
                 <!-- MODAL DE CADASTRAR LABORATÓRIO-->
-                <fieldset style="float: right"> 
                 <button data-ls-module="modal" data-target="#modalLarge"
                         class="ls-btn-dark ls-ico-plus" id="botao-modal botoes" data-append-to="body" >Novo</button>
-               </fieldset>
+
              <form action="laboratorio.php" method="GET" class="ls-form ls-form-horizontal row" id="formulario-01">
-                    <fieldset> 
+                    <fieldset> <button type="submit" class="ls-btn-dark ls-ico-search" id="botoes">Buscar</button>
                         <label class="ls-label col-md-5 col-xs-12" id="pesquisar">
                             <b class="ls-label-text">Pesquisar:</b>
-                            <input type="text" name="search" id="search" placeholder="Informe o que deseja pesquisar" class="ls-field" >
+                            <input type="text" placeholder="Informe o que deseja pesquisar" class="ls-field" >
                         </label>
 
                         <label class="ls-label col-md-4 col-xs-12" id="filtrar">
-
+                            <b class="ls-label-text">Filtrar por:</b>
+                            <div class="ls-custom-select">
+                                <select name="insumo" class="ls-select">
+                                    <?php listaInsumo() ?>
+                                </select>
+                            </div>
                         </label>
 
                     </fieldset>
@@ -86,10 +90,8 @@ require_once ('./adminphp/conecta.php');
                                 <th>Andar</th>
                                 <?php
                                 if ($_SESSION['PERFIL'] == 1) {
-                                    $_SESSION['PERFIL'] = 1;
                                     echo "<th>Editar</th>";
                                 } else {
-                                    $_SESSION['PERFIL'] = 0;
                                     echo "<th>Visualizar</th>";
                                 }
                                 ?>
@@ -142,14 +144,14 @@ require_once ('./adminphp/conecta.php');
                                     </label>
                                 </fieldset>
                                 <fieldset> 
-<!--                                    <label class="ls-label col-md-5 col-xs-12" id="tipo-insumo">
+                                    <label class="ls-label col-md-5 col-xs-12" id="tipo-insumo">
                                         <b class="ls-label-text">Tipo de Insumo</b>
                                         <div class="ls-custom-select">
                                             <select name="addTipoInsumo" class="ls-select">
-<?php //listaTipoInsumo() ?>
+<?php listaTipoInsumo() ?>
                                             </select>
                                         </div>
-                                    </label>-->
+                                    </label>
 
 
                                     <label class="ls-label col-md-5 col-xs-12" id="insumo">
@@ -164,8 +166,8 @@ require_once ('./adminphp/conecta.php');
                                 </fieldset>
 
 
-                                <button class="ls-btn ls-float-right" data-dismiss="modal">Fechar</button>
-                                <button type="submit" class="ls-btn-danger" data-save="Salvar">Salvar</button>
+                                <button class="ls-btn-primary ls-ico-close ls-float-right" data-dismiss="modal">Fechar</button>
+                                <button type="submit" class="ls-btn-primary ls-ico-checkmark" data-save="Salvar">Salvar</button>
                         </div>
                     </div>
                 </div><!-- /.modal -->
@@ -208,14 +210,7 @@ require_once ('./adminphp/conecta.php');
             selectionFooter: "<div class='custom-header'><span class='ls-ico-checkbox-checked' > Selecionados</div>"
         });
 
-                                                $(document).ready(function () {
-                $("#search").on("keyup", function () {
-                    var value = $(this).val().toLowerCase();
-                    $("#tbody tr").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
-            });
+
     </script>
 
 </body>

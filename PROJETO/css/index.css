@@ -151,3 +151,7 @@ input+.ls-label-text-prefix {
     font-size: 20px;
     color:#454545;
 }
+
+.modal-backdrop  {
+  z-index: -1;
+}
