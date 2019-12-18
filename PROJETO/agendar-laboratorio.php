@@ -167,7 +167,7 @@ $select = mysqli_query($conexao, $query);
                                           <div class='ls-prefix-group'>
                                             <b class='ls-label-text'>Data</b>
                                             <input type='text' name='DATA' class='datepicker' id='datepickerExample' placeholder='dd/mm/aaaa' required>
-                                            <a class='ls-label-text-prefix ls-ico-calendar' data-trigger-calendar='#datepickerExample' href='#'></a>
+                                            <a class='' data-trigger-calendar='#datepickerExample' href='#'></a>
                                           </div>
                                         </label>
                                         <label class='ls-label col-md-11' id='filtrar'>

@@ -17,6 +17,7 @@ $(document).ready(function() {
         },eventClick: function (info) {
             info.jsEvent.preventDefault(); // don't let the browser navigate
             console.log(info.event);
+            //FAKE EVENTS
             $('#visualizar #id').text(info.event.id);
             $('#visualizar #id').val(info.event.id);
             $('#visualizar #title').text(info.event.title);
@@ -25,17 +26,21 @@ $(document).ready(function() {
             $('#visualizar #periodo').val(info.event.extendedProps.periodo);
             $('#visualizar #sit').text(info.event.extendedProps.sit);
             $('#visualizar #sit').val(info.event.extendedProps.sit);
+            $('#visualizar #sit2').text(info.event.extendedProps.sit2);
+            $('#visualizar #sit2').val(info.event.extendedProps.sit2);
             $('#visualizar #andar').text(info.event.extendedProps.andar);
             $('#visualizar #andar').val(info.event.extendedProps.andar);
             $('#visualizar #sala').text(info.event.extendedProps.sala);
             $('#visualizar #sala').val(info.event.extendedProps.sala);
+            $('#visualizar #infoADC').text(info.event.extendedProps.infoADC);
+            $('#visualizar #infoADC').val(info.event.extendedProps.infoADC);
             $('#visualizar #start').text(info.event.start.toLocaleString());
             $('#visualizar #start').val(info.event.start.toLocaleString());
             $('#visualizar #end').text(info.event.end.toLocaleString());
             $('#visualizar #end').val(info.event.end.toLocaleString());
             $('#visualizar #color').val(info.event.backgroundColor);
         
-        locastyle.modal.open("#myAwesomeModal");
+      
 
            $('#visualizar').modal('show');
         },

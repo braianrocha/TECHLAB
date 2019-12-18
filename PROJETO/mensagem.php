@@ -153,7 +153,7 @@ if (empty($_SESSION['msg'])) {
             break;
         
             case "AGENDUPLO" :
-            echo "<div id='alerta-msg' class='ls-alert-danger'><center><b>Agendamento não efetuado ! </b><br>Já existe um agendamento para esse laboratório nessa  data.</div>";
+            echo "<div id='alerta-msg' class='ls-alert-danger'><center><b>Agendamento não efetuado ! </b><br>Já existe um agendamento para esse laboratório nessa data e horário.</div>";
             break;
         
             case "MSG21" :
