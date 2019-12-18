@@ -132,6 +132,12 @@ if ((isset($_SESSION['msg']))) {
 
                             <dt class="col-sm-3">Fim :</dt>
                             <dd class="col-sm-9" id="end"></dd>
+                            
+<!--      
+                            <dt class="col-sm-3">Obs :</dt>
+                            <dd class="col-sm-9" id="infoad"></dd>-->
+
+                            
                         </dl>
 
                         <button type="button" class="btn btn-primary btn-canc-edit" data-dismiss="modal">Fechar</button>
@@ -216,7 +222,7 @@ if ((isset($_SESSION['msg']))) {
                                 <label class="col-sm-2 col-form-label">Laboratório</label>
                                 <div class="col-sm-10">
 
-                                    <select name="lab" class="form-control" id="periodo">
+                                    <select name="lab" class="form-control" id="lab">
 <?PHP echo $optionLab ?>
 
                                     </select>

@@ -142,14 +142,14 @@ require_once ('./adminphp/conecta.php');
                                     </label>
                                 </fieldset>
                                 <fieldset> 
-                                    <label class="ls-label col-md-5 col-xs-12" id="tipo-insumo">
+<!--                                    <label class="ls-label col-md-5 col-xs-12" id="tipo-insumo">
                                         <b class="ls-label-text">Tipo de Insumo</b>
                                         <div class="ls-custom-select">
                                             <select name="addTipoInsumo" class="ls-select">
-<?php listaTipoInsumo() ?>
+<?php //listaTipoInsumo() ?>
                                             </select>
                                         </div>
-                                    </label>
+                                    </label>-->
 
 
                                     <label class="ls-label col-md-5 col-xs-12" id="insumo">

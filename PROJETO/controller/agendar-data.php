@@ -23,8 +23,8 @@ $idLAB = mysqli_real_escape_string($conexao, $_POST['lab']);
 require_once('../parametros.php');
 
 
-$query = "INSERT INTO AGENDAMENTO (DATA_SOLIC , USUARIO_ID , DATA_AG, PERIODO_ID,CURSO_ID,SITUACAO_SOLIC_ID,LABORATORIO_ID)"
-        . "VALUES ('" . $dataAtual . "', " . $idUser . " , '" . $DATA_AG . "' , " . $periodo . ", " . $curso . " ,'" . aprovacaoAgendamento() . "' ," . $idLAB . ")";
+$query = "INSERT INTO AGENDAMENTO (INFO_ADC , DATA_SOLIC , USUARIO_ID , DATA_AG, PERIODO_ID,CURSO_ID,SITUACAO_SOLIC_ID,LABORATORIO_ID)"
+        . "VALUES ('".$obs."' ,'" . $dataAtual . "', " . $idUser . " , '" . $DATA_AG . "' , " . $periodo . ", " . $curso . " ,'" . aprovacaoAgendamento() . "' ," . $idLAB . ")";
 
 
 if (antecedenciaMax($DATA_AG) == FALSE ||

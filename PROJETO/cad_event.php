@@ -12,12 +12,12 @@ $data_start_conv = date("Y-m-d", strtotime($data_start));
 $data_end = str_replace('/', '-', $dados['end']);
 $data_end_conv = date("Y-m-d H:i:s", strtotime($data_end));
 
-
+$obs = $dados['obs'];
 
 //$query_event = "INSERT INTO events (title, color, start, end) VALUES (:title, :color, :start, :end)";
 
-$query_event = "INSERT INTO AGENDAMENTO (DATA_SOLIC , USUARIO_ID , DATA_AG, PERIODO_ID,CURSO_ID,SITUACAO_SOLIC_ID,LABORATORIO_ID)"
-        . "     VALUES ('2019-11-22 00:00:00', 10, '".$data_start_conv."' , ".$dados['periodo'].", 3 ,'P' ,".$dados['lab'].")";
+$query_event = "INSERT INTO AGENDAMENTO (INFO_ADC , DATA_SOLIC , USUARIO_ID , DATA_AG, PERIODO_ID,CURSO_ID,SITUACAO_SOLIC_ID,LABORATORIO_ID)"
+        . "     VALUES ('".$obs."' , '2019-11-22 00:00:00', 10, '".$data_start_conv."' , ".$dados['periodo'].", 3 ,'P' ,".$dados['lab'].")";
     
 $insert_event = $conn->prepare($query_event);
 $insert_event->bindParam(':title', $dados['title']);
