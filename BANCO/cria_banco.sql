@@ -13,10 +13,10 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/* !40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT; */
+/* !40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS; */
+/* !40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION; */
+/* !40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `basemapeamento`
@@ -60,16 +60,6 @@ ALTER TABLE `AGENDAMENTO`
 ALTER TABLE `AGENDAMENTO`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código Identificador do Agendamento', AUTO_INCREMENT=168;
 
---
--- Limitadores para a tabela `AGENDAMENTO`
---
-ALTER TABLE `AGENDAMENTO`
-  ADD CONSTRAINT `fk_AGENDAMENTO_CURSO` FOREIGN KEY (`CURSO_ID`) REFERENCES `CURSO` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_AGENDAMENTO_LABORATORIO` FOREIGN KEY (`LABORATORIO_ID`) REFERENCES `LABORATORIO` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_AGENDAMENTO_PERIODO` FOREIGN KEY (`PERIODO_ID`) REFERENCES `PERIODO` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_AGENDAMENTO_SITUACAO_SOLIC` FOREIGN KEY (`SITUACAO_SOLIC_ID`) REFERENCES `SIT_SOLICITACAO` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_AGENDAMENTO_USUARIO` FOREIGN KEY (`USUARIO_ID`) REFERENCES `USUARIO` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
 -- =======================================================================================================================================================================================================================
 
 
@@ -96,12 +86,6 @@ ALTER TABLE `CURSO`
 --
 ALTER TABLE `CURSO`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código identificador do curso', AUTO_INCREMENT=21;
-
---
--- Limitadores para a tabela `CURSO`
---
-ALTER TABLE `CURSO`
-  ADD CONSTRAINT `fk_CURSO_TIPO_CURSO` FOREIGN KEY (`TIPO_CURSO_ID`) REFERENCES `TIPO_CURSO` (`TIPO`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- =======================================================================================================================================================================================================================
 
@@ -130,12 +114,6 @@ ALTER TABLE `INSUMO`
 ALTER TABLE `INSUMO`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código indentificador do insumo', AUTO_INCREMENT=24;
 
---
--- Limitadores para a tabela `INSUMO`
---
-ALTER TABLE `INSUMO`
-  ADD CONSTRAINT `fk_INSUMO_TIPO_INS` FOREIGN KEY (`TIPO_INS_ID`) REFERENCES `TIPO_INSUMO` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
 -- =======================================================================================================================================================================================================================
 
 -- =========================== T A B E L A   I N S U M O _ L A B =========================================================================================================================================================
@@ -157,13 +135,6 @@ ALTER TABLE `INSUMO_LAB`
   ADD PRIMARY KEY (`INSUMO_ID`,`LABORATORIO_ID`),
   ADD KEY `fk_LABORATORIO_has_INSUMO_INSUMO` (`INSUMO_ID`),
   ADD KEY `fk_LABORATORIO_has_INSUMO_LABORATORIO` (`LABORATORIO_ID`);
-
---
--- Limitadores para a tabela `INSUMO_LAB`
---
-ALTER TABLE `INSUMO_LAB`
-  ADD CONSTRAINT `fk_LABORATORIO_has_INSUMO_INSUMO` FOREIGN KEY (`INSUMO_ID`) REFERENCES `INSUMO` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_LABORATORIO_has_INSUMO_LABORATORIO` FOREIGN KEY (`LABORATORIO_ID`) REFERENCES `LABORATORIO` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- =======================================================================================================================================================================================================================
 
@@ -193,12 +164,6 @@ ALTER TABLE `LABORATORIO`
 --
 ALTER TABLE `LABORATORIO`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código identificador do curso', AUTO_INCREMENT=43;
-
---
--- Limitadores para a tabela `LABORATORIO`
---
-ALTER TABLE `LABORATORIO`
-  ADD CONSTRAINT `fk_LABORATORIO_TIPO_LAB` FOREIGN KEY (`TIPO_LAB_ID`) REFERENCES `TIPO_LABORATORIO` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- =======================================================================================================================================================================================================================
 
@@ -403,6 +368,48 @@ ALTER TABLE `USUARIO`
 ALTER TABLE `USUARIO`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código Identificador do Usuário', AUTO_INCREMENT=14;
 
+-- =======================================================================================================================================================================================================================
+
+-- =========================== CONSTRAINTS ===============================================================================================================================================================================
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Limitadores para a tabela `AGENDAMENTO`
+--
+ALTER TABLE `AGENDAMENTO`
+  ADD CONSTRAINT `fk_AGENDAMENTO_CURSO` FOREIGN KEY (`CURSO_ID`) REFERENCES `CURSO` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_AGENDAMENTO_LABORATORIO` FOREIGN KEY (`LABORATORIO_ID`) REFERENCES `LABORATORIO` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_AGENDAMENTO_PERIODO` FOREIGN KEY (`PERIODO_ID`) REFERENCES `PERIODO` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_AGENDAMENTO_SITUACAO_SOLIC` FOREIGN KEY (`SITUACAO_SOLIC_ID`) REFERENCES `SIT_SOLICITACAO` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_AGENDAMENTO_USUARIO` FOREIGN KEY (`USUARIO_ID`) REFERENCES `USUARIO` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `CURSO`
+--
+ALTER TABLE `CURSO`
+  ADD CONSTRAINT `fk_CURSO_TIPO_CURSO` FOREIGN KEY (`TIPO_CURSO_ID`) REFERENCES `TIPO_CURSO` (`TIPO`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `INSUMO`
+--
+ALTER TABLE `INSUMO`
+  ADD CONSTRAINT `fk_INSUMO_TIPO_INS` FOREIGN KEY (`TIPO_INS_ID`) REFERENCES `TIPO_INSUMO` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `INSUMO_LAB`
+--
+ALTER TABLE `INSUMO_LAB`
+  ADD CONSTRAINT `fk_LABORATORIO_has_INSUMO_INSUMO` FOREIGN KEY (`INSUMO_ID`) REFERENCES `INSUMO` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_LABORATORIO_has_INSUMO_LABORATORIO` FOREIGN KEY (`LABORATORIO_ID`) REFERENCES `LABORATORIO` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `LABORATORIO`
+--
+ALTER TABLE `LABORATORIO`
+  ADD CONSTRAINT `fk_LABORATORIO_TIPO_LAB` FOREIGN KEY (`TIPO_LAB_ID`) REFERENCES `TIPO_LABORATORIO` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
 --
 -- Limitadores para a tabela `USUARIO`
 --
@@ -413,7 +420,6 @@ COMMIT;
 
 -- =======================================================================================================================================================================================================================
 
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/* !40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT; */
+/* !40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS; */
+/* !40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION; */
