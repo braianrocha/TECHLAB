@@ -13,24 +13,23 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 
-/* !40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT; */
-/* !40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS; */
-/* !40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION; */
-/* !40101 SET NAMES utf8mb4 */;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `basemapeamento`
+-- Database: `sisal`
 --
-CREATE DATABASE IF NOT EXISTS `basemapeamento` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `basemapeamento`;
+CREATE DATABASE IF NOT EXISTS `sisal` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `sisal`;
 
 -- --------------------------------------------------------
-
--- =========================== T A B E L A   A G E N D A M E N T O =======================================================================================================================================================
 
 --
 -- Estrutura da tabela `AGENDAMENTO`
 --
+
 CREATE TABLE `AGENDAMENTO` (
   `ID` int(11) NOT NULL COMMENT 'Código Identificador do Agendamento',
   `DATA_SOLIC` datetime NOT NULL,
@@ -44,52 +43,14 @@ CREATE TABLE `AGENDAMENTO` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_danish_ci;
 
 --
--- Indexes for table `AGENDAMENTO`
---
-ALTER TABLE `AGENDAMENTO`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `fk_AGENDAMENTO_USUARIO` (`USUARIO_ID`),
-  ADD KEY `fk_AGENDAMENTO_SITUACAO_SOLIC` (`SITUACAO_SOLIC_ID`),
-  ADD KEY `fk_AGENDAMENTO_PERIODO` (`PERIODO_ID`),
-  ADD KEY `fk_AGENDAMENTO_LABORATORIO` (`LABORATORIO_ID`),
-  ADD KEY `fk_AGENDAMENTO_CURSO` (`CURSO_ID`);
-
---
--- AUTO_INCREMENT for table `AGENDAMENTO`
---
-ALTER TABLE `AGENDAMENTO`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código Identificador do Agendamento', AUTO_INCREMENT=168;
-
--- =======================================================================================================================================================================================================================
-
-
--- =========================== T A B E L A   C U R S O ===================================================================================================================================================================
-
---
 -- Estrutura da tabela `CURSO`
 --
+
 CREATE TABLE `CURSO` (
   `ID` int(11) NOT NULL COMMENT 'Código identificador do curso',
   `DESCRICAO` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Descrição do curso',
   `TIPO_CURSO_ID` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Indexes for table `CURSO`
---
-ALTER TABLE `CURSO`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `fk_CURSO_TIPO_CURSO` (`TIPO_CURSO_ID`);
-
---
--- AUTO_INCREMENT for table `CURSO`
---
-ALTER TABLE `CURSO`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código identificador do curso', AUTO_INCREMENT=21;
-
--- =======================================================================================================================================================================================================================
-
--- =========================== T A B E L A   I N S U M O =================================================================================================================================================================
 
 --
 -- Estrutura da tabela `INSUMO`
@@ -102,23 +63,6 @@ CREATE TABLE `INSUMO` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
--- Indexes for table `INSUMO`
---
-ALTER TABLE `INSUMO`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `fk_INSUMO_TIPO_INS` (`TIPO_INS_ID`);
-
---
--- AUTO_INCREMENT for table `INSUMO`
---
-ALTER TABLE `INSUMO`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código indentificador do insumo', AUTO_INCREMENT=24;
-
--- =======================================================================================================================================================================================================================
-
--- =========================== T A B E L A   I N S U M O _ L A B =========================================================================================================================================================
-
---
 -- Estrutura da tabela `INSUMO_LAB`
 --
 
@@ -127,18 +71,7 @@ CREATE TABLE `INSUMO_LAB` (
   `INSUMO_ID` int(11) NOT NULL,
   `QTDINSUMO` int(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-
---
--- Indexes for table `INSUMO_LAB`
---
-ALTER TABLE `INSUMO_LAB`
-  ADD PRIMARY KEY (`INSUMO_ID`,`LABORATORIO_ID`),
-  ADD KEY `fk_LABORATORIO_has_INSUMO_INSUMO` (`INSUMO_ID`),
-  ADD KEY `fk_LABORATORIO_has_INSUMO_LABORATORIO` (`LABORATORIO_ID`);
-
--- =======================================================================================================================================================================================================================
-
--- =========================== T A B E L A   L A B O R A T O R I O =======================================================================================================================================================
+x
 
 --
 -- Estrutura da tabela `LABORATORIO`
@@ -151,23 +84,6 @@ CREATE TABLE `LABORATORIO` (
   `ANDAR` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Andar onde se localiza o Laboratório',
   `TIPO_LAB_ID` int(11) NOT NULL COMMENT 'Tipo do Laboratório (ver tabela TIPO_LABORATORIO)'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-
---
--- Indexes for table `LABORATORIO`
---
-ALTER TABLE `LABORATORIO`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `fk_LABORATORIO_TIPO_LAB` (`TIPO_LAB_ID`);
-
---
--- AUTO_INCREMENT for table `LABORATORIO`
---
-ALTER TABLE `LABORATORIO`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código identificador do curso', AUTO_INCREMENT=43;
-
--- =======================================================================================================================================================================================================================
-
--- =========================== T A B E L A   P A R A M _ G E R A I S =====================================================================================================================================================
 
 --
 -- Estrutura da tabela `PARAM_GERAIS`
@@ -183,22 +99,6 @@ CREATE TABLE `PARAM_GERAIS` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
--- Indexes for table `PARAM_GERAIS`
---
-ALTER TABLE `PARAM_GERAIS`
-  ADD PRIMARY KEY (`ID`);
-
---
--- AUTO_INCREMENT for table `PARAM_GERAIS`
---
-ALTER TABLE `PARAM_GERAIS`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código identificador do Parâmetro', AUTO_INCREMENT=2;
-
--- =======================================================================================================================================================================================================================
-
--- =========================== T A B E L A   P E R F I L =================================================================================================================================================================
-
---
 -- Estrutura da tabela `PERFIL`
 --
 
@@ -206,22 +106,6 @@ CREATE TABLE `PERFIL` (
   `ID` int(11) NOT NULL COMMENT 'Código Identificador do Perfil de Usuário',
   `DESCRICAO` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Descrição do Perfil de Usuário'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-
---
--- Indexes for table `PERFIL`
---
-ALTER TABLE `PERFIL`
-  ADD PRIMARY KEY (`ID`);
-
---
--- AUTO_INCREMENT for table `PERFIL`
---
-ALTER TABLE `PERFIL`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código Identificador do Perfil de Usuário', AUTO_INCREMENT=5;
-
--- =======================================================================================================================================================================================================================
-
--- =========================== T A B E L A   P E R I O D O ===============================================================================================================================================================
 
 --
 -- Estrutura da tabela `PERIODO`
@@ -234,21 +118,6 @@ CREATE TABLE `PERIODO` (
   `FIM` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
---
--- Indexes for table `PERIODO`
---
-ALTER TABLE `PERIODO`
-  ADD PRIMARY KEY (`ID`);
-
---
--- AUTO_INCREMENT for table `PERIODO`
---
-ALTER TABLE `PERIODO`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código do Período', AUTO_INCREMENT=7;
-
--- =======================================================================================================================================================================================================================
-
--- =========================== T A B E L A   S I T _ S O L I C I T A C A O ===============================================================================================================================================
 
 --
 -- Estrutura da tabela `SIT_SOLICITACAO`
@@ -258,16 +127,6 @@ CREATE TABLE `SIT_SOLICITACAO` (
   `ID` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Código Identificador da Situação da Solicitação:\n\n- P (Pendente)\n- A (Aprovada)\n- R (Recusada)\n- C (Cancelada)\n',
   `DESCRICAO` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Descrição da Situação da Solicitação:- Pendente- Aprovada- Recusada- Cancelada'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-
--
--- Indexes for table `SIT_SOLICITACAO`
---
-ALTER TABLE `SIT_SOLICITACAO`
-  ADD PRIMARY KEY (`ID`);
-
--- =======================================================================================================================================================================================================================
-
--- =========================== T A B E L A   T I P O _ C U R S O =========================================================================================================================================================
 
 --
 -- Estrutura da tabela `TIPO_CURSO`
@@ -279,16 +138,6 @@ CREATE TABLE `TIPO_CURSO` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
--- Indexes for table `TIPO_CURSO`
---
-ALTER TABLE `TIPO_CURSO`
-  ADD PRIMARY KEY (`TIPO`);
-
--- =======================================================================================================================================================================================================================
-
--- =========================== T A B E L A   T I P O _ I N S U M O =======================================================================================================================================================
-
---
 -- Estrutura da tabela `TIPO_INSUMO`
 --
 
@@ -298,22 +147,6 @@ CREATE TABLE `TIPO_INSUMO` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
--- Indexes for table `TIPO_INSUMO`
---
-ALTER TABLE `TIPO_INSUMO`
-  ADD PRIMARY KEY (`ID`);
-
---
--- AUTO_INCREMENT for table `TIPO_INSUMO`
---
-ALTER TABLE `TIPO_INSUMO`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código indentificador do insumo', AUTO_INCREMENT=5;
-
--- =======================================================================================================================================================================================================================
-
--- =========================== T A B E L A   T I P O _ L A B O R A T O R I O =============================================================================================================================================
-
---
 -- Estrutura da tabela `TIPO_LABORATORIO`
 --
 
@@ -321,22 +154,6 @@ CREATE TABLE `TIPO_LABORATORIO` (
   `ID` int(11) NOT NULL COMMENT 'Código indentificador do Laboratório\n',
   `DESCRICAO` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Descrição detalhada do Laboratório'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Indexes for table `TIPO_LABORATORIO`
---
-ALTER TABLE `TIPO_LABORATORIO`
-  ADD PRIMARY KEY (`ID`);
-
---
--- AUTO_INCREMENT for table `TIPO_LABORATORIO`
---
-ALTER TABLE `TIPO_LABORATORIO`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código indentificador do Laboratório\n', AUTO_INCREMENT=6;
-
--- =======================================================================================================================================================================================================================
-
--- =========================== T A B E L A   U S U A R I O ===============================================================================================================================================================
 
 --
 -- Estrutura da tabela `USUARIO`
@@ -355,6 +172,92 @@ CREATE TABLE `USUARIO` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `AGENDAMENTO`
+--
+ALTER TABLE `AGENDAMENTO`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `fk_AGENDAMENTO_USUARIO` (`USUARIO_ID`),
+  ADD KEY `fk_AGENDAMENTO_SITUACAO_SOLIC` (`SITUACAO_SOLIC_ID`),
+  ADD KEY `fk_AGENDAMENTO_PERIODO` (`PERIODO_ID`),
+  ADD KEY `fk_AGENDAMENTO_LABORATORIO` (`LABORATORIO_ID`),
+  ADD KEY `fk_AGENDAMENTO_CURSO` (`CURSO_ID`);
+
+--
+-- Indexes for table `CURSO`
+--
+ALTER TABLE `CURSO`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `fk_CURSO_TIPO_CURSO` (`TIPO_CURSO_ID`);
+
+--
+-- Indexes for table `INSUMO`
+--
+ALTER TABLE `INSUMO`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `fk_INSUMO_TIPO_INS` (`TIPO_INS_ID`);
+
+--
+-- Indexes for table `INSUMO_LAB`
+--
+ALTER TABLE `INSUMO_LAB`
+  ADD PRIMARY KEY (`INSUMO_ID`,`LABORATORIO_ID`),
+  ADD KEY `fk_LABORATORIO_has_INSUMO_INSUMO` (`INSUMO_ID`),
+  ADD KEY `fk_LABORATORIO_has_INSUMO_LABORATORIO` (`LABORATORIO_ID`);
+
+--
+-- Indexes for table `LABORATORIO`
+--
+ALTER TABLE `LABORATORIO`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `fk_LABORATORIO_TIPO_LAB` (`TIPO_LAB_ID`);
+
+--
+-- Indexes for table `PARAM_GERAIS`
+--
+ALTER TABLE `PARAM_GERAIS`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `PERFIL`
+--
+ALTER TABLE `PERFIL`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `PERIODO`
+--
+ALTER TABLE `PERIODO`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `SIT_SOLICITACAO`
+--
+ALTER TABLE `SIT_SOLICITACAO`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `TIPO_CURSO`
+--
+ALTER TABLE `TIPO_CURSO`
+  ADD PRIMARY KEY (`TIPO`);
+
+--
+-- Indexes for table `TIPO_INSUMO`
+--
+ALTER TABLE `TIPO_INSUMO`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `TIPO_LABORATORIO`
+--
+ALTER TABLE `TIPO_LABORATORIO`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indexes for table `USUARIO`
 --
 ALTER TABLE `USUARIO`
@@ -363,14 +266,69 @@ ALTER TABLE `USUARIO`
   ADD KEY `fk_USUARIO_PERFIL` (`PERFIL_ID`);
 
 --
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `AGENDAMENTO`
+--
+ALTER TABLE `AGENDAMENTO`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código Identificador do Agendamento', AUTO_INCREMENT=168;
+
+--
+-- AUTO_INCREMENT for table `CURSO`
+--
+ALTER TABLE `CURSO`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código identificador do curso', AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT for table `INSUMO`
+--
+ALTER TABLE `INSUMO`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código indentificador do insumo', AUTO_INCREMENT=24;
+
+--
+-- AUTO_INCREMENT for table `LABORATORIO`
+--
+ALTER TABLE `LABORATORIO`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código identificador do curso', AUTO_INCREMENT=43;
+
+--
+-- AUTO_INCREMENT for table `PARAM_GERAIS`
+--
+ALTER TABLE `PARAM_GERAIS`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código identificador do Parâmetro', AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `PERFIL`
+--
+ALTER TABLE `PERFIL`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código Identificador do Perfil de Usuário', AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `PERIODO`
+--
+ALTER TABLE `PERIODO`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código do Período', AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `TIPO_INSUMO`
+--
+ALTER TABLE `TIPO_INSUMO`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código indentificador do insumo', AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `TIPO_LABORATORIO`
+--
+ALTER TABLE `TIPO_LABORATORIO`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código indentificador do Laboratório\n', AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `USUARIO`
 --
 ALTER TABLE `USUARIO`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código Identificador do Usuário', AUTO_INCREMENT=14;
 
--- =======================================================================================================================================================================================================================
-
--- =========================== CONSTRAINTS ===============================================================================================================================================================================
 --
 -- Constraints for dumped tables
 --
@@ -418,8 +376,6 @@ ALTER TABLE `USUARIO`
   ADD CONSTRAINT `fk_USUARIO_PERIODO` FOREIGN KEY (`PERIODO_ID`) REFERENCES `PERIODO` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
--- =======================================================================================================================================================================================================================
-
-/* !40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT; */
-/* !40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS; */
-/* !40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION; */
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
