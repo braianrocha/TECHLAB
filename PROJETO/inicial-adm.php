@@ -3,7 +3,7 @@ require_once('./adminphp/verificausuario.php');
 verificaLogin();
 require_once('./adminphp/conecta.php');
 
-$query = "SELECT AGENDA.ID AS ID , PROF.NOME AS USUARIO ,PER.DESCRICAO AS PERFIL ,AGENDA.DATA_AG,PERI.DESCRICAO AS PERIODODESCRI,SOLICITACAO.DESCRICAO AS SOLICITACAODESCRI, TIPOLAB.DESCRICAO AS TIPOLABDESCRI,LAB.DESCRICAO AS LABDESCRI,LAB.SALA AS LABSALA,LAB.ANDAR AS LABANDAR , TIPOLAB.ID AS IDTIPOLAB
+$query = "SELECT AGENDA.INFO_ADC ,AGENDA.ID AS ID , PROF.NOME AS USUARIO ,PER.DESCRICAO AS PERFIL ,AGENDA.DATA_AG,PERI.DESCRICAO AS PERIODODESCRI,SOLICITACAO.DESCRICAO AS SOLICITACAODESCRI, TIPOLAB.DESCRICAO AS TIPOLABDESCRI,LAB.DESCRICAO AS LABDESCRI,LAB.SALA AS LABSALA,LAB.ANDAR AS LABANDAR , TIPOLAB.ID AS IDTIPOLAB
 FROM AGENDAMENTO AGENDA
 INNER JOIN PERIODO PERI ON PERI.ID = AGENDA.PERIODO_ID
 INNER JOIN SIT_SOLICITACAO SOLICITACAO ON SOLICITACAO.ID = AGENDA.SITUACAO_SOLIC_ID
@@ -68,7 +68,7 @@ $resultado = mysqli_query($conexao, $query);
                         <tr>
                             <th style="display: none" >ID</th>
                             <th>Usuário</th>
-                            <th>Perfil</th>
+                            <th></th>
                             <th>Tipo</th>
                             <th>Laboratório</th>
                             <th>Data</th>
@@ -79,6 +79,11 @@ $resultado = mysqli_query($conexao, $query);
                     <tbody>
                         <?php
                         while ($meusAgendamentos = mysqli_fetch_assoc($resultado)) {
+                            if($meusAgendamentos['INFO_ADC'] != ""){
+                                $ObsAdicional = "<td><a href='#' class='ls-ico-help' data-placement='right' data-ls-module='popover' title='Observação' data-content='".$meusAgendamentos['INFO_ADC'].".'></a></td>";
+                            }else{
+                                $ObsAdicional = "<td></td>";
+                            }
                             //CONVERTENDO A DATA PARA  DIA/MES/ANO
                             $meusAgendamentos['DATA_AG'] = date("d/m/Y", strtotime($meusAgendamentos['DATA_AG']));
                             switch ($meusAgendamentos['IDTIPOLAB']) {
@@ -96,73 +101,74 @@ $resultado = mysqli_query($conexao, $query);
                                         <tr>
                                             <td style='display: none' > " . $meusAgendamentos['ID'] . " </td>
                                             <td>" . $meusAgendamentos['USUARIO'] . "</td>
-                                            <td>" . $meusAgendamentos['PERFIL'] . "</td>
+                                            ".$ObsAdicional." 
                                             <td class='$icone'>" . $meusAgendamentos['TIPOLABDESCRI'] . "</td>
                                             <td>" . $meusAgendamentos['LABDESCRI'] . "</td>
                                             <td>" . $meusAgendamentos['DATA_AG'] . "</td>
                                             <td>" . $meusAgendamentos['PERIODODESCRI'] . "</td>
                                             <td><a href='#' data-ls-module='modal' data-target='#aprovamodalSmall".$meusAgendamentos['ID']."' class='ls-btn-aprovar ls-ico-checkmark' style='margin: 3px; '>Aprovar</a> </td>
                                             <td><button type='button' data-ls-module='modal' data-target='#deletemodalSmall".$meusAgendamentos['ID']."' class='ls-btn-primary-danger ls-ico-close' style='margin: 3px; '>Recusar</button></td>
-      
-                                                       
-                                                                          <!-- MODAL PARA DELETAR -->
-                          <div class='ls-modal' id='deletemodalSmall".$meusAgendamentos['ID']."'>
-                            <div class='ls-modal-small'>
-                              <div class='ls-modal-header'>
-                                <button data-dismiss='modal'>&times;</button>
-                                <h4 class='ls-modal-title'>Recusar agendamento</h4>
-                              </div>
-                              <div class='ls-modal-body'>
-                                 <form action='controller/cancelaragendamento.php'  method='post' class='ls-form-inline row' >
-                                        <input type='hidden' name='ID' placeholder='' required  value='".$meusAgendamentos['ID']."'>
-                                        <p><h3>Confirma exclusão do agendamento? 
-                                        
-                                        <br><p> Essa operação não pode ser desfeita.</p>
-                                          <label class='ls-label'>
-                                        <b class='ls-label-text'>Motivo do cancelamento :</b>
-                                        <textarea rows='4' required name='INFO_ADC'></textarea>
-                                      </label>
-                                        </div>
-                                        <div class='ls-modal-footer'>
-                                              <button class='ls-btn-dark ls-float-right ls-ico-close' data-dismiss='modal' style='margin: 3px;'>Cancelar</button>
-                                              <button type='submit' class='ls-btn-dark ls-ico-checkmark' style='margin: 3px;'>Salvar</button>  
-                                 </form>                              
 
-                              
-                           
-                                 </div>
-                            </div>
-                          </div>
-                                             
-                                                            
-                         
-                        <div class='ls-modal' id='aprovamodalSmall".$meusAgendamentos['ID']."''>
-                          <div class='ls-modal-box'>
-                            <div class='ls-modal-header'>
-                              <button data-dismiss='modal'>&times;</button>
-                              <h4 class='ls-modal-title'>Confirmar agendamento</h4>
-                            </div>
-                            <div class='ls-modal-body' id='myModalBody'>
-                                        <form action='controller/confirmaragendamento.php'  method='post' class='ls-form-inline row' >
-                                        <input type='hidden' name='ID' placeholder='' required  value='".$meusAgendamentos['ID']."'>
-                                        <p><h3>Confirma à aprovação do agendamento? 
-                                        
-                                        <br><br><p> Essa operação não pode ser desfeita.</p>
-                                        </div>
-                                        <div class='ls-modal-footer'>
-                                                                                                               <button class='ls-btn-dark ls-float-right ls-ico-close' data-dismiss='modal' style='margin: 3px;'>Cancelar</button>
-                                              <button type='submit' class='ls-btn-dark ls-ico-checkmark' style='margin: 3px;'>Salvar</button>  
-          
-                                 </form>                              
-
-                            </div>
-
-                          </div>
-                        </div>
 
 
 
                                         </tr>
+                                              
+                                                       
+                                        <!-- MODAL PARA DELETAR -->
+                                        <div class='ls-modal' id='deletemodalSmall".$meusAgendamentos['ID']."'>
+                                          <div class='ls-modal-small'>
+                                            <div class='ls-modal-header'>
+                                              <button data-dismiss='modal'>&times;</button>
+                                              <h4 class='ls-modal-title'>Recusar agendamento</h4>
+                                            </div>
+                                            <div class='ls-modal-body'>
+                                               <form action='controller/cancelaragendamento.php'  method='post' class='ls-form-inline row' >
+                                                      <input type='hidden' name='ID' placeholder='' required  value='".$meusAgendamentos['ID']."'>
+                                                      <p><h3>Confirma exclusão do agendamento? 
+                                                      
+                                                      <br><p> Essa operação não pode ser desfeita.</p>
+                                                        <label class='ls-label'>
+                                                      <b class='ls-label-text'>Motivo do cancelamento :</b>
+                                                      <textarea rows='4' required name='INFO_ADC'></textarea>
+                                                    </label>
+                                                      </div>
+                                                      <div class='ls-modal-footer'>
+                                                            <button class='ls-btn-dark ls-float-right ls-ico-close' data-dismiss='modal' style='margin: 3px;'>Cancelar</button>
+                                                            <button type='submit' class='ls-btn-dark ls-ico-checkmark' style='margin: 3px;'>Salvar</button>  
+                                               </form>                              
+              
+                                            
+                                         
+                                               </div>
+                                          </div>
+                                        </div>
+                                                           
+                                                                          
+                                       
+                                      <div class='ls-modal' id='aprovamodalSmall".$meusAgendamentos['ID']."''>
+                                        <div class='ls-modal-box'>
+                                          <div class='ls-modal-header'>
+                                            <button data-dismiss='modal'>&times;</button>
+                                            <h4 class='ls-modal-title'>Confirmar agendamento</h4>
+                                          </div>
+                                          <div class='ls-modal-body' id='myModalBody'>
+                                                      <form action='controller/confirmaragendamento.php'  method='post' class='ls-form-inline row' >
+                                                      <input type='hidden' name='ID' placeholder='' required  value='".$meusAgendamentos['ID']."'>
+                                                      <p><h3>Confirma à aprovação do agendamento? 
+                                                      
+                                                      <br><br><p> Essa operação não pode ser desfeita.</p>
+                                                      </div>
+                                                      <div class='ls-modal-footer'>
+                                                         
+                                                          <button type='submit' class='ls-btn-dark ls-ico-checkmark' style='margin: 3px;'>Salvar</button>  
+                        
+                                               </form>                              
+              <button class='ls-btn-dark ls-float-right ls-ico-close' data-dismiss='modal' style='margin: 3px;'>Cancelar</button>
+                                          </div>
+              
+                                        </div>
+                                      </div>
                         ";
                         }
                         ?>
@@ -173,7 +179,7 @@ $resultado = mysqli_query($conexao, $query);
             </div>
 
             <!--Essa parte é do footer, onde contém por quem é desenvolvido, a logo e o email-->
-            <?php require_once('model\footer.php'); ?>
+           <?php require_once('./model/footer.php'); ?>
         </main>
 
         <!--Esses scripts são do locaweb NAO APAGUE-->

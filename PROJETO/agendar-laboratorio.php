@@ -3,9 +3,6 @@ require_once ('./adminphp/conecta.php');
 
 // Adiciona o arquivo de controle que ajudará a listar os dados
 
-
-
-
 $op = "";
 $query2 = "SELECT * FROM PERIODO ORDER BY ID";
 $resultado2 = mysqli_query(buscaconexao(), $query2);
@@ -100,11 +97,10 @@ $select = mysqli_query($conexao, $query);
             <span class="ls-show-sidebar ls-ico-menu"></span>
         </div>
         <!--Barra Vertical de Menu (Contém a logo de usuário,logo do pitagoras e os menus para acessar)-->
-<?php require_once('./model/menu.php'); ?>
+        <?php require_once('./model/menu.php'); ?>
         <!-- Aqui inicia o conteúdo da pagina -->
         <main class="ls-main ">
-                                  <?php
-                         
+            <?php
             // verifica se existe alguma mensagem pra ser enviada para o usuário
             if ((isset($_SESSION['msg']))) {
                 require_once('./mensagem.php');
@@ -129,7 +125,7 @@ $select = mysqli_query($conexao, $query);
                             <div class="ls-custom-select">
                                 <select name="insumo" class="ls-select">
                                     <option value='0'>Selecione o filtro</option>
-<?php listaInsumo(); ?>
+                                    <?php listaInsumo(); ?>
                                 </select>
 
                             </div>
@@ -139,9 +135,9 @@ $select = mysqli_query($conexao, $query);
                 </form>
                 <!--Fim do formulario-->
                 <!--Nesta tabela aparecerá os resultados da pesquisa realizada pelo usuario e o botao para selecionar o laboratorio desejado-->
-<?php
-while ($lab = mysqli_fetch_array($select)) {
-    echo "   <div data-ls-module='collapse' data-target='#" . $lab['ID'] . "' class='ls-collapse '>
+                <?php
+                while ($lab = mysqli_fetch_array($select)) {
+                    echo "   <div data-ls-module='collapse' data-target='#" . $lab['ID'] . "' class='ls-collapse '>
                                 <a href='#' class='ls-collapse-header'>
                                   <h3 class='ls-collapse-title'>" . $lab['DESCRICAO'] . " </h3>
                                 </a>
@@ -171,7 +167,7 @@ while ($lab = mysqli_fetch_array($select)) {
                                           <div class='ls-prefix-group'>
                                             <b class='ls-label-text'>Data</b>
                                             <input type='text' name='DATA' class='datepicker' id='datepickerExample' placeholder='dd/mm/aaaa' required>
-                                            <a class='ls-label-text-prefix ls-ico-calendar' data-trigger-calendar='#datepickerExample' href='#'></a>
+                                            <a class='' data-trigger-calendar='#datepickerExample' href='#'></a>
                                           </div>
                                         </label>
                                         <label class='ls-label col-md-11' id='filtrar'>
@@ -204,14 +200,14 @@ while ($lab = mysqli_fetch_array($select)) {
                             </div>
                           </div>  
                             </div>";
-}
-?>       
+                }
+                ?>       
 
                 <!--Fim da tabela-->
             </div>
 
             <!--Essa parte é do footer, onde contém por quem é desenvolvido, a logo e o email-->
-                <?php require_once ('model/footer.php'); ?>
+            <?php require_once ('model/footer.php'); ?>
         </main>
 
         <!--Esses scripts são do locaweb NAO APAGUE-->

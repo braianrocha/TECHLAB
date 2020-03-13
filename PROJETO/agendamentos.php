@@ -8,8 +8,8 @@ INNER JOIN SIT_SOLICITACAO SOLICITACAO ON SOLICITACAO.ID = AGENDA.SITUACAO_SOLIC
 INNER JOIN LABORATORIO LAB ON LAB.ID = AGENDA.LABORATORIO_ID
 INNER JOIN TIPO_LABORATORIO TIPOLAB ON LAB.TIPO_LAB_ID = TIPOLAB.ID 
 WHERE AGENDA.USUARIO_ID = " . idUsuarioLogado() . " AND AGENDA.DATA_AG < NOW()
-ORDER BY AGENDA.DATA_AG;";
-
+ORDER BY AGENDA.DATA_AG LIMIT 40;";
+// LIMITANDO A 40 linhas exibidas no historico
 $resultado = mysqli_query($conexao, $query);
 ?>
 
@@ -64,11 +64,11 @@ $resultado = mysqli_query($conexao, $query);
                     <fieldset>
                         <label class="ls-label col-md-5 col-xs-12" id="pesquisar">
                             <b class="ls-label-text">Pesquisar:</b>
-                            <input type="text" placeholder="Informe o que deseja pesquisar" class="ls-field" required>
+                            <input type="text" name="search" id="search" placeholder="Informe o que deseja pesquisar" class="ls-field" required>
                         </label>
 
 
-                        <label class="ls-label col-md-4 col-xs-12" id="filtrar">
+<!--                        <label class="ls-label col-md-4 col-xs-12" id="filtrar">
                             <b class="ls-label-text">Filtrar por:</b>
 
                             <div class="ls-custom-select">
@@ -81,11 +81,10 @@ $resultado = mysqli_query($conexao, $query);
                                     <option>Tipo 05</option>
                                 </select>
                             </div>
-                        </label>
+                        </label>-->
 
                         <fieldset>
-                            <button type="button" class="ls-btn-dark ls-ico-close" id="botoes">Cancelar</button>
-                            <button type="button" class="ls-btn-dark ls-ico-search" id="botoes">Buscar</button>
+                 
                         </fieldset>  
 
                     </fieldset>
@@ -104,7 +103,7 @@ $resultado = mysqli_query($conexao, $query);
                            
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="agendam">
                         <?php
                             while($meusAgendamentos = mysqli_fetch_assoc($resultado)){
                                //CONVERTENDO A DATA PARA  DIA/MES/ANO
@@ -142,7 +141,7 @@ $resultado = mysqli_query($conexao, $query);
             </div>
 
             <!--Essa parte é do footer, onde contém por quem é desenvolvido, a logo e o email-->
-<?php require_once('model\footer.php'); ?>
+   <?php require_once('./model/footer.php'); ?>
         </main>
 
         <!--Esses scripts são do locaweb NAO APAGUE-->
@@ -155,6 +154,16 @@ $resultado = mysqli_query($conexao, $query);
         <script type="text/javascript">
             $(window).on('load', function () {
                 locastyle.browserUnsupportedBar.init();
+            });
+            
+            
+                                                $(document).ready(function () {
+                $("#search").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#agendam tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
             });
         </script>
 

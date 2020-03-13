@@ -23,10 +23,12 @@ function listaLaboratorio(){
                 <td>".$laboratorio["DESC"]."</td>
                 <td>".$laboratorio["SALA"]."</td>
                 <td>".$laboratorio["ANDAR"]."</td>
-                  <td><form action='editarLaboratorio.php'  method='POST' class='ls-form-inline row' >
+                  <td><form action='editarLaboratorio.php'  method='POST' >
 <input type='hidden' name='ID' placeholder='' required  value='".$laboratorio['ID']."'>                         
 <button  type='submit' class='ls-btn ls-ico-pencil'></button>
-                      <form>
+                      </form>
+                  </td>
+                  <td>
                         <button  data-ls-module='modal' data-target='#deletemodalSmall".$laboratorio['ID']."' class='ls-btn ls-ico-remove'></button>
    
    
@@ -35,10 +37,10 @@ function listaLaboratorio(){
                             <div class='ls-modal-small'>
                               <div class='ls-modal-header'>
                                 <button data-dismiss='modal'>&times;</button>
-                                <h4 class='ls-modal-title'>Excluir curso</h4>
+                                <h4 class='ls-modal-title'>Excluir laboratório</h4>
                               </div>
                               <div class='ls-modal-body'>
-                                 <form action='controller/excluirLaboratorio.php'  method='post' class='ls-form-inline row' >
+                                 <form action='controller/excluirLaboratorio.php'  method='post' >
                                   <input type='hidden' name='ID' placeholder='' required  value='".$laboratorio['ID']."'> 
                                 <p><h3>Confirma exclusão do registro? 
                                 <br><br><center><p style='color: red; font-size:20px'>".$laboratorio["DESC"]."</p></h3></center>
@@ -55,6 +57,7 @@ function listaLaboratorio(){
                             </div>
                           </div>
                     </td>
+                     
              </tr> ";    
         
     }else{

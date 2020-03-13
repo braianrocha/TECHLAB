@@ -7,7 +7,7 @@
  */
 include 'conexao.php';
 
-$query_events = "SELECT LAB.ANDAR, LAB.SALA, SOLIC.DESCRICAO AS SOLICDESC, AGENDA.ID,AGENDA.SITUACAO_SOLIC_ID AS SIT,  AGENDA.DATA_AG , CONCAT(AGENDA.DATA_AG,' ' , PERI.INICIO) AS INICIOAGENDAMENTO , CONCAT(AGENDA.DATA_AG,' ' , PERI.FIM) AS FIMAGENDAMENTO , LAB.DESCRICAO  AS LABDESCRICAO   , PERI.DESCRICAO AS DPERI, PERI.ID AS IDPERI , PERI.INICIO , PERI.FIM
+$query_events = "SELECT AGENDA.INFO_ADC AS OBS , LAB.ANDAR, LAB.SALA, SOLIC.DESCRICAO AS SOLICDESC, AGENDA.ID,AGENDA.SITUACAO_SOLIC_ID AS SIT,  AGENDA.DATA_AG , CONCAT(AGENDA.DATA_AG,' ' , PERI.INICIO) AS INICIOAGENDAMENTO , CONCAT(AGENDA.DATA_AG,' ' , PERI.FIM) AS FIMAGENDAMENTO , LAB.DESCRICAO  AS LABDESCRICAO   , PERI.DESCRICAO AS DPERI, PERI.ID AS IDPERI , PERI.INICIO , PERI.FIM
  FROM AGENDAMENTO AGENDA
 INNER JOIN LABORATORIO LAB ON LAB.ID = AGENDA.LABORATORIO_ID
 INNER JOIN PERIODO PERI ON PERI.ID = AGENDA.PERIODO_ID
@@ -21,6 +21,8 @@ $eventos = [];
 while($row_events = $resultado_events->fetch(PDO::FETCH_ASSOC)){
     $periodo = $row_events['DPERI'];
     $sala = $row_events['SALA'];
+    $obs = $row_events['OBS'];
+  
     $andar = $row_events['ANDAR'];
     $id = $row_events['ID'];
     $title = $row_events['LABDESCRICAO'];
@@ -39,7 +41,6 @@ while($row_events = $resultado_events->fetch(PDO::FETCH_ASSOC)){
     $start = $row_events['INICIOAGENDAMENTO'];
     $end = $row_events['FIMAGENDAMENTO'];
     
-    
     $eventos[] = [
         'id' => $id, 
         'title' => $title, 
@@ -48,9 +49,12 @@ while($row_events = $resultado_events->fetch(PDO::FETCH_ASSOC)){
         'end' => $end,
         'periodo' => $periodo,
         'sit' => $status,
+        'sit2' => $status,
         'andar' => $andar,
+        'infoADC' => $obs,
         'sala' => $sala
         ];
+        
 }
 
 echo json_encode($eventos);

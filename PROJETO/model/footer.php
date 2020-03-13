@@ -19,4 +19,7 @@ echo '<footer class="ls-footer" role="contentinfo">
             },5000);
         </script>';
 
-  ?>
+
+
+?>
+

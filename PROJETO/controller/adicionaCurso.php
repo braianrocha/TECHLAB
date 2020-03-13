@@ -11,7 +11,7 @@ $nome = mysqli_real_escape_string($conexao,$_POST['DESC']);
 $listaCurso = mysqli_real_escape_string($conexao,$_POST['addlistaCurso']);
 
 //QUERY que será executada no bando de dados
-$query = "INSERT INTO CURSO (CURSO.DESCRICAO,CURSO.TIPO_CURSO_ID) VALUES ('$nome' , '".$listaCurso."') ;";
+$query = "INSERT INTO CURSO (CURSO.DESCRICAO,CURSO.TIPO_CURSO_ID) VALUES ('$nome' , '".$listaCurso."');";
 
 //mysqli_query -> Envia a conexão e a query para execução
 // $select -> variavel com resultado da query 

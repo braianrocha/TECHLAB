@@ -28,8 +28,8 @@ require_once('../parametros.php');
  $dataAgendamentoQuery = date("Y/m/d", strtotime(str_replace("/", '-', $dataAgendamento)));
 $dataAtualQuery = date("Y/m/d", strtotime(str_replace("/", '-', $dataAtual)));
         
-$query = "INSERT INTO AGENDAMENTO (DATA_SOLIC , USUARIO_ID , DATA_AG, PERIODO_ID,CURSO_ID,SITUACAO_SOLIC_ID,LABORATORIO_ID)"
-       . "VALUES ('".$dataAtualQuery."', ".$idUser." , '".$dataAgendamentoQuery."' , ".$periodo.", ".$curso." ,'".aprovacaoAgendamento()."' ,".$id.")";
+$query = "INSERT INTO AGENDAMENTO (INFO_ADC ,DATA_SOLIC , USUARIO_ID , DATA_AG, PERIODO_ID,CURSO_ID,SITUACAO_SOLIC_ID,LABORATORIO_ID)"
+       . "VALUES ('".$obs."','".$dataAtualQuery."', ".$idUser." , '".$dataAgendamentoQuery."' , ".$periodo.", ".$curso." ,'".aprovacaoAgendamento()."' ,".$id.")";
 
 
  if(antecedenciaMax($dataAgendamento) == FALSE || 
@@ -39,13 +39,13 @@ $query = "INSERT INTO AGENDAMENTO (DATA_SOLIC , USUARIO_ID , DATA_AG, PERIODO_ID
     verificaAgendamento($dataAgendamento,$periodo,$id) == FALSE
          ){
      
-     echo "antecedenciaMax".antecedenciaMax($dataAgendamento);
-     echo "<BR>maxAgendamentosDia".maxAgendamentosDia($dataAgendamento,$idUser);
-     echo "<BR>maxAgendamentosSimultaneo".maxAgendamentosSimultaneo($idUser);
-     echo  "<BR>antecedenciaMIN".antecedenciaMIN($dataAgendamento);
-     echo  "<BR>verificaAgendamento".verificaAgendamento($dataAgendamento,$periodo,$id);
-     
-     echo("deu ruim<br>");
+//     echo "antecedenciaMax".antecedenciaMax($dataAgendamento);
+//     echo "<BR>maxAgendamentosDia".maxAgendamentosDia($dataAgendamento,$idUser);
+//     echo "<BR>maxAgendamentosSimultaneo".maxAgendamentosSimultaneo($idUser);
+//     echo  "<BR>antecedenciaMIN".antecedenciaMIN($dataAgendamento);
+//     echo  "<BR>verificaAgendamento".verificaAgendamento($dataAgendamento,$periodo,$id);
+//     
+//     echo("deu ruim<br>");
      echo $query;
      
 //     header('Location: ../agendar-laboratorio.php');
@@ -57,15 +57,7 @@ $query = "INSERT INTO AGENDAMENTO (DATA_SOLIC , USUARIO_ID , DATA_AG, PERIODO_ID
      //echo $query;
  }
  
-
-
-
- 
- 
- 
 $query = "INSERT INTO AGENDAMENTO (DATA_SOLIC , USUARIO_ID , DATA_AG, PERIODO_ID,CURSO_ID,SITUACAO_SOLIC_ID,LABORATORIO_ID)"
        . "VALUES ('".$dataAtual."', ".$idUser." , '".$dataAgendamento."' , ".$periodo.", ".$curso." ,".aprovacaoAgendamento()." ,".$id.")";
-
-
 
 //echo $query;

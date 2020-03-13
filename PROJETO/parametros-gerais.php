@@ -67,13 +67,13 @@ $resultado = mysqli_fetch_assoc($resultado);
                     <button type="submit" class="ls-btn-dark ls-ico-checkmark">Salvar</button>
                     <p>Antecedência mínima para agendamento:  
 <!-- ADICIONA O VALOR RETORNADO PELO BANCO NO VALUE DO IMPUT, PARA QUE A PAGINA CARREGUE COM OS VALORES QUE ESTÃO NO BANCO DE DADOS-->
-                        <input type="number" name="AG_ADIANT_MIN" value="<?php echo $resultado['AG_ADIANT_MIN']; ?>" class="parametros-antecedencia-minima"></p> 
+                        <input type="number" name="AG_ADIANT_MIN" value="<?php echo $resultado['AG_ADIANT_MIN']; ?>" class="parametros-antecedencia-minima"> Dias</p> 
                     <p>Antecedência máxima para agendamento:
-                        <input type="number" name="AG_ADIANT_MAX" value="<?php echo $resultado['AG_ADIANT_MAX']; ?>" class="parametros-antecedencia-maxima" ></p>
+                        <input type="number" name="AG_ADIANT_MAX" value="<?php echo $resultado['AG_ADIANT_MAX']; ?>" class="parametros-antecedencia-maxima" > Dias</p>
                     <p>Máximo de agendamentos por dia:
-                        <input type="number" name="AG_MAX_DIA" value="<?php echo $resultado['AG_MAX_DIA']; ?>" class="parametros-agendamentos-dia" ></p>
+                        <input type="number" name="AG_MAX_DIA" value="<?php echo $resultado['AG_MAX_DIA']; ?>" class="parametros-agendamentos-dia" > Agendamentos</p>
                     <p>Máximo de agendamentos Simultâneos:
-                        <input type="number" name="AG_MAX_SIMULT" value="<?php echo $resultado['AG_MAX_SIMULT']; ?>" class="parametros-agendamentos-silmutaneos" ></p>
+                        <input type="number" name="AG_MAX_SIMULT" value="<?php echo $resultado['AG_MAX_SIMULT']; ?>" class="parametros-agendamentos-silmutaneos" > Agendamentos  </p>
                     <p class="ls-display-inline-block">Necessário aprovação de Agendamentos?</p>
                     <div data-ls-module="switchButton" class="ls-switch-btn ls-float-center">
                         <?php
@@ -83,14 +83,12 @@ $resultado = mysqli_fetch_assoc($resultado);
                             echo "<input type='checkbox' name='AG_APROVA'>";
                         }
                         ?>
-
-
                         <label class="ls-switch-label"  name="label-teste" ls-switch-off="Desativado" ls-switch-on="Ativado"><span></span></label>
                     </div>
                 </form>
             </div>
             <!--Essa parte é do footer, onde contém por quem é desenvolvido, a logo e o email-->
-            <?php require_once('model\footer.php'); ?>
+   <?php require_once('./model/footer.php'); ?>
         </main>
 
         <!--Esses scripts são do locaweb NAO APAGUE-->

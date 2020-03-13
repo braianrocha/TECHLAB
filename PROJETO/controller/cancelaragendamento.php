@@ -1,4 +1,5 @@
 <?php
+
 // Adiciona o arquivo de verificação
 require_once('../adminphp/verificausuario.php');
 verificaLogin();
@@ -9,8 +10,8 @@ require_once('../adminphp/conecta.php');
 // Verificação contra SQLINJECTION
 $id = mysqli_real_escape_string($conexao, $_POST['ID']);
 
-if(!(isset($_POST['INFO_ADC']))){
-$_POST['INFO_ADC'] = "Cancelado pelo usuário.";
+if (!(isset($_POST['INFO_ADC']))) {
+    $_POST['INFO_ADC'] = "Cancelado pelo usuário.";
 }
 
 //BUSCANDO INFO
@@ -20,29 +21,28 @@ $INFO_FETCH = $INFO->fetch_assoc();
 $INFO_ADC = $INFO_FETCH['INFO_ADC'];
 
 date_default_timezone_set('America/Campo_Grande');
-$INFO_ADC .= "[ Cancelamento - ".date('d/m/Y \à\s H:i:s')."] "."\n"." Motivo :";
+$INFO_ADC .= "[ Cancelamento - " . date('d/m/Y \à\s H:i:s') . "] " . "\n" . " Motivo :";
 
 $INFO_ADC .= mysqli_real_escape_string($conexao, $_POST['INFO_ADC']);
-$INFO_ADC .= "\n".
+$INFO_ADC .= "\n" .
 //echo $INFO_ADC;
 //QUERY que será executada no bando de dados 
-$query = "UPDATE  AGENDAMENTO SET SITUACAO_SOLIC_ID = 'C' , INFO_ADC = '$INFO_ADC' WHERE ID = '$id'";
+        $query = "UPDATE  AGENDAMENTO SET SITUACAO_SOLIC_ID = 'C' , INFO_ADC = '$INFO_ADC' WHERE ID = '$id'";
 
 // EXECUTA a QUERY de delete.
 $select = mysqli_query($conexao, $query);
-    if ($select) {
-      
-        if($_SESSION['PERFIL'] == 1){
-            // Se deletou , redireciona com mensagem de sucesso.
-        $_SESSION['msg'] = "MSG06";
+if ($select) {
+
+    if ($_SESSION['PERFIL'] == 1) {
+        // Se deletou , redireciona com mensagem de sucesso.
+        $_SESSION['msg'] = "MSG22";
         header('Location: ../inicial-adm.php');
         die();
-        }else{
-            // Se deletou , redireciona com mensagem de sucesso.
-        $_SESSION['msg'] = "MSG06";
+    } else {
+        // Se deletou , redireciona com mensagem de sucesso.
+        $_SESSION['msg'] = "MSG22";
         header('Location: ../inicial.php');
         die();
-        }
-
     }
+}
 ?>

@@ -29,6 +29,8 @@ document.addEventListener('DOMContentLoaded', function () {
             $('#visualizar #periodo').val(info.event.extendedProps.periodo);
             $('#visualizar #sit').text(info.event.extendedProps.sit);
             $('#visualizar #sit').val(info.event.extendedProps.sit);
+            
+            
             $('#visualizar #andar').text(info.event.extendedProps.andar);
             $('#visualizar #andar').val(info.event.extendedProps.andar);
             $('#visualizar #sala').text(info.event.extendedProps.sala);
@@ -38,6 +40,8 @@ document.addEventListener('DOMContentLoaded', function () {
             $('#visualizar #end').text(info.event.end.toLocaleString());
             $('#visualizar #end').val(info.event.end.toLocaleString());
             $('#visualizar #color').val(info.event.backgroundColor);
+            $('#visualizar #infoADC').text(info.event.extendedProps.infoADC);
+            $('#visualizar #infoADC').val(info.event.extendedProps.infoADC);
             $('#visualizar').modal('show');
         },
         selectable: true,

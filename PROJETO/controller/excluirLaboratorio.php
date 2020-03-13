@@ -15,7 +15,8 @@ $select = mysqli_query($conexao, $query);
 
 
 
-
+echo $query;
+exit();
 
 //QUERY que será executada no bando de dados 
 

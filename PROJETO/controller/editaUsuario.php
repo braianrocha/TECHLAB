@@ -9,27 +9,27 @@ require_once('../adminphp/conecta.php');
 
 
   // Recebe os parametros do formulário
-  $nome = mysqli_real_escape_string($conexao,$_POST['nome']);
-  $email = mysqli_real_escape_string($conexao,$_POST['email']);
-  $cpf = mysqli_real_escape_string($conexao,$_POST['cpf']);
-  $perfil = mysqli_real_escape_string($conexao,$_POST['perfil']);
-  $turno = mysqli_real_escape_string($conexao,$_POST['turno']);
+$ID = mysqli_real_escape_string($conexao,$_POST['ID']);
+  $nome = mysqli_real_escape_string($conexao,$_POST['NOME']);
+  $email = mysqli_real_escape_string($conexao,$_POST['EMAIL']);
+  
+  $perfil = mysqli_real_escape_string($conexao,$_POST['PERFIL']);
+  
+  $periodo = mysqli_real_escape_string($conexao,$_POST['PERIODO']);
+  
 if(isset($_POST['agendamento'])){
 //Necessário aprovação de Agendamentos?
   $reservar  = 1;    
 }else{
   $reservar  = 0;
 }
-  
-  
-  
-  
-  $password = md5($cpf);
-
-
     // QUERY que será executada no bando de dados
-    $query = "INSERT INTO USUARIO (NOME,CPF,EMAIL,RESERVA,SENHA,PERIODO_ID,PERFIL_ID) VALUES "
-            . "('$nome' , '$cpf', '$email', '$reservar', '$password', '$turno', '$perfil');";
+    $query = "UPDATE USUARIO SET 
+            NOME = '".$nome."',
+            EMAIL = '".$email."',
+            RESERVA = ".$reservar." ,
+            PERIODO_ID = ".$periodo.",
+            PERFIL_ID= ".$perfil." WHERE ID =".$ID;
 
     $select=mysqli_query($conexao,$query);
 
@@ -38,25 +38,13 @@ if(isset($_POST['agendamento'])){
         $_SESSION['msg'] = "MSG04";
         header('Location: ../usuarios.php');
         die();
+    }else{
+        echo "deu ruim";
     }
 
   //alertaErro(nome+"<br>"+email+"<br>"+cpf+"<br>"+perfil+"<br>"+senha1+"<br>"+senha2+"<br>"+turmo+"<br>"+permisaoReserva+"<br>");
 
 
-
-  
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //  function validacaoNome($nome) {
 //if(preg_match("/^([a-zA-Z' ]+)$/",$nome)) {
@@ -86,24 +74,6 @@ if(isset($_POST['agendamento'])){
 //    die();
 //  }
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 
 // // Verificando se adicionou
 // if($select){
