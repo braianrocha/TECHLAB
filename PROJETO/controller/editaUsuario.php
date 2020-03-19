@@ -23,24 +23,50 @@ if(isset($_POST['agendamento'])){
 }else{
   $reservar  = 0;
 }
-    // QUERY que será executada no bando de dados
-    $query = "UPDATE USUARIO SET 
-            NOME = '".$nome."',
-            EMAIL = '".$email."',
-            RESERVA = ".$reservar." ,
-            PERIODO_ID = ".$periodo.",
-            PERFIL_ID= ".$perfil." WHERE ID =".$ID;
+//=================== Valida Dados atualizados na edição de usuário =========================//
+//===========================Alterado por Viviane Santana ===================================//
+//================================Em 16/03/2020==============================================//
 
-    $select=mysqli_query($conexao,$query);
+  $queryVerificaCpfUsuario = mysqli_query($conexao, "SELECT USER.CPF FROM USUARIO USER WHERE USER.CPF = ('$cpf');");
+  $queryVerificaEmailUsuario = mysqli_query($conexao, "SELECT USER.EMAIL FROM USUARIO USER WHERE USER.EMAIL = ('$email');");
 
-    if($select){
-        // Se adicionou redireciona para pagina com a mensagem da sucesso.
-        $_SESSION['msg'] = "MSG04";
-        header('Location: ../usuarios.php');
-        die();
+  $resultadoCpf = mysqli_fetch_assoc($queryVerificaCpfUsuario);
+  $resultadoEmail = mysqli_fetch_assoc($queryVerificaEmailUsuario);
+
+  if (!empty($resultadoCpf)) {
+    if (!empty($resultadoEmail)){
+      $_SESSION['msg'] = "MSG28";
+      header('Location: ../usuarios.php');
+      die();
     }else{
-        echo "deu ruim";
+      $_SESSION['msg'] = "MSG26";
+      header('Location: ../usuarios.php');
+      die();
     }
+  } else if (!empty($resultadoEmail)){
+    $_SESSION['msg'] = "MSG27";
+    header('Location: ../usuarios.php');
+    die();
+  } else {
+      // QUERY que será executada no bando de dados
+      $query = "UPDATE USUARIO SET 
+              NOME = '".$nome."',
+              EMAIL = '".$email."',
+              RESERVA = ".$reservar." ,
+              PERIODO_ID = ".$periodo.",
+              PERFIL_ID= ".$perfil." WHERE ID =".$ID;
+
+      $select=mysqli_query($conexao,$query);
+
+      if($select){
+          // Se adicionou redireciona para pagina com a mensagem da sucesso.
+          $_SESSION['msg'] = "MSG04";
+          header('Location: ../usuarios.php');
+          die();
+      }else{
+          echo "deu ruim";
+      }
+  }
 
   //alertaErro(nome+"<br>"+email+"<br>"+cpf+"<br>"+perfil+"<br>"+senha1+"<br>"+senha2+"<br>"+turmo+"<br>"+permisaoReserva+"<br>");
 

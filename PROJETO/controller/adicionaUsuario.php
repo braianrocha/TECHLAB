@@ -20,13 +20,33 @@ if(isset($_POST['agendamento'])){
 }else{
   $reservar  = 0;
 }
-  
-  
-  
-  
-  $password = md5($cpf);
+//============== Valida dados inseridos na inclusão de novo usuário =========================//
+//========================Alterado por Viviane Santana ======================================//
+//================================Em 13/03/2020==============================================//
+
+$queryVerificaCpfUsuario = mysqli_query($conexao, "SELECT USER.CPF FROM USUARIO USER WHERE USER.CPF = ('$cpf');");
+$queryVerificaEmailUsuario = mysqli_query($conexao, "SELECT USER.EMAIL FROM USUARIO USER WHERE USER.EMAIL = ('$email');");
+
+$resultadoCpf = mysqli_fetch_assoc($queryVerificaCpfUsuario);
+$resultadoEmail = mysqli_fetch_assoc($queryVerificaEmailUsuario);
 
 
+  if (!empty($resultadoCpf)) {
+    if (!empty($resultadoEmail)){
+      $_SESSION['msg'] = "MSG28"; //Cadastro de Usuário não efetuado ! Já existe um usuário com o CPF e E-mail informados.
+      header('Location: ../usuarios.php');
+      die();
+    }else{
+      $_SESSION['msg'] = "MSG26"; //Cadastro de Usuário não efetuado ! Já existe um usuário com o CPF informado.
+      header('Location: ../usuarios.php');
+      die();
+    }
+  } else if (!empty($resultadoEmail)){
+    $_SESSION['msg'] = "MSG27"; //Cadastro de Usuário não efetuado ! Já existe um usuário com o E-mail informado.
+    header('Location: ../usuarios.php');
+    die();
+  } else {		
+    $password = md5($cpf);
     // QUERY que será executada no bando de dados
     $query = "INSERT INTO USUARIO (NOME,CPF,EMAIL,RESERVA,SENHA,PERIODO_ID,PERFIL_ID) VALUES "
             . "('$nome' , '$cpf', '$email', '$reservar', '$password', '$turno', '$perfil');";
@@ -39,6 +59,7 @@ if(isset($_POST['agendamento'])){
         header('Location: ../usuarios.php');
         die();
     }
+  }
 
   //alertaErro(nome+"<br>"+email+"<br>"+cpf+"<br>"+perfil+"<br>"+senha1+"<br>"+senha2+"<br>"+turmo+"<br>"+permisaoReserva+"<br>");
 
