@@ -108,6 +108,23 @@ if (empty($_SESSION['msg'])) {
             echo "<div id='alerta-msg' class='ls-alert-danger'><center>CPF inválido. msg</div>";
             break;
 
+        //--------Msgs incluídas para validação dos dados de usuário no cadastro -----//
+        //--------------------------Alterado por Viviane Santana----------------------// 
+        //---------------------------------Em 13/03/2020------------------------------//
+        
+        case "MSG26" :
+            echo "<div id='alerta-msg' class='ls-alert-danger'><center><b>Cadastro de Usuário não efetuado ! </b><br>Já existe um usuário com o CPF informado. </div>";
+        break;
+    
+        case "MSG27" :
+            echo "<div id='alerta-msg' class='ls-alert-danger'><center><b>Cadastro de Usuário não efetuado ! </b><br>Já existe um usuário com o E-mail informado. </div>";
+        break;
+
+        case "MSG28" :
+            echo "<div id='alerta-msg' class='ls-alert-danger'><center><b>Cadastro de Usuário não efetuado ! </b><br>Já existe um usuário com o CPF e E-mail informados. </div>";
+        break;
+
+        // ---------------------------------------------------------------------------//
 
         case "MSG99" :
             echo "<div id='alerta-msg' class='ls-alert-danger'><center>DESLOGADO COM SUCESSO !!</div>";
@@ -159,6 +176,8 @@ if (empty($_SESSION['msg'])) {
             case "MSG21" :
             echo "<div id='alerta-msg' class='ls-alert-success'><center>Agendamento de laboratório realizado com sucesso.</div>";
             break;
+        
+        
     }
 
 
