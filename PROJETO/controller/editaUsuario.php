@@ -64,7 +64,8 @@ if(isset($_POST['agendamento'])){
           header('Location: ../usuarios.php');
           die();
       }else{
-          echo "deu ruim";
+          echo "Erro ao atualizar usuario";
+          var_dump($select);
       }
   }
 
